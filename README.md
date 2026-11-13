@@ -1,1 +1,1 @@
-# Thinklab Individual 21
+# thinklab-individual-21
