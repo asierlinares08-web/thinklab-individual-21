@@ -1,0 +1,33 @@
+# 2026-11-19 10:17:18 · Red de gestión fuera de banda de Server-Monitorizacion
+## Adaptadores en VirtualBox (anfitrión)
+nic1="intnet"
+nic2="nat"
+## Dentro de srv-mon (entrando por ssh -p 2222 asier@127.0.0.1)
+$ cat /etc/network/interfaces.d/gestion
+auto enp0s8
+iface enp0s8 inet static
+    address 10.0.3.15/24
+$ ip -4 -br a
+lo               UNKNOWN        127.0.0.1/8 
+enp0s3           UP             192.168.21.40/24 
+enp0s8           UP             10.0.3.15/24 
+$ ip route
+default via 192.168.21.1 dev enp0s3 onlink 
+10.0.3.0/24 dev enp0s8 proto kernel scope link src 10.0.3.15 
+192.168.21.0/24 dev enp0s3 proto kernel scope link src 192.168.21.40 
+$ ip route get 1.1.1.1
+1.1.1.1 via 192.168.21.1 dev enp0s3 src 192.168.21.40 uid 1000 
+    cache 
+$ traceroute -n -m 4 -q 1 1.1.1.1
+traceroute to 1.1.1.1 (1.1.1.1), 4 hops max, 60 byte packets
+ 1  192.168.21.1  0.367 ms
+ 2  10.0.2.2  0.537 ms
+ 3  *
+ 4  172.18.22.1  0.994 ms
+## Reenvío de puerto (solo escucha en 127.0.0.1 del anfitrión)
+Forwarding(0)="ssh-gestion,tcp,127.0.0.1,2222,10.0.3.15,22"
+## srv-mon NO enruta entre redes (no puede servir de atajo)
+$ cat /proc/sys/net/ipv4/ip_forward
+0
+## El puerto solo escucha en localhost del anfitrión
+LISTEN 0      10         127.0.0.1:2222       0.0.0.0:*          

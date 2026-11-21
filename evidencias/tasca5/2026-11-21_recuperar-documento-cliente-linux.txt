@@ -1,0 +1,18 @@
+### Recuperar un documento · Client-Linux · 2026-11-21 14:00:48
+--- 1. Crear el documento (permisos 640: lectura y escritura solo para asier, lectura para su grupo)
+-rw-r----- 1 asier asier 86 nov 21 14:00 /home/asier/documento-prueba.txt
+SHA-256 antes:   5d36e8679a452e782c36df83f7dd1591400d6efb6e3ff07f1652637c79af814e
+--- 2. Copiarlo a TrueNAS (scp -p conserva permisos y fecha)
+-rw-r----- 1 asier asier 86 Nov 21 14:00 /mnt/copias/cliente-linux/documento-prueba.txt
+5d36e8679a452e782c36df83f7dd1591400d6efb6e3ff07f1652637c79af814e  /mnt/copias/cliente-linux/documento-prueba.txt
+--- 3. Pérdida: se borra el original
+ls: no se puede acceder a '/home/asier/documento-prueba.txt': No existe el fichero o el directorio
+--- 4. Restaurar desde la copia de TrueNAS
+--- 5. Comprobar: se abre, mismo contenido y mismos permisos
+Documento de prueba de la revisión final.
+Creado: 2026-11-21 14:00:48
+Usuario: asier
+-rw-r----- 1 asier asier 86 nov 21 14:00 /home/asier/documento-prueba.txt
+SHA-256 después: 5d36e8679a452e782c36df83f7dd1591400d6efb6e3ff07f1652637c79af814e
+RESULTADO: SHA-256 IGUAL
+Tiempo desde el borrado hasta tenerlo restaurado: 0,24 s

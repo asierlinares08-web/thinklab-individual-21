@@ -1,0 +1,64 @@
+TESTS DE DIAGNÓSTICO — equipo: clase (asier) — 2026-11-17 11:11:54
+CONDICIONES: uptime up 3 hours, 0 minutes · carga 0.62 0.52 0.39 · RAM libre 20Gi
+             VMs en marcha: 0
+0 headless / 0
+0 con ventana
+             Temperatura CPU al empezar: Package id 0: +65.0 C (high = +110.0 C, crit = +110.0 C)
+
+################ 1. MEMORIA — memtester (prueba en caliente de 512 MB, 1 pasada) ################
+Herramienta: memtester 4.6.0-1
+Limitación: solo prueba la RAM libre que el sistema le deja. Prueba completa = memtest86+ desde GRUB (fuera del SO).
+Loop 1/1:
+ Stuck Address : ok
+ Random Value : ok
+ Compare XOR : ok
+ Compare SUB : ok
+ Compare MUL : ok
+ Compare DIV : ok
+ Compare OR : ok
+ Compare AND : ok
+ Sequential Increment: ok
+ Solid Bits : ok
+ Block Sequential : ok
+ Checkerboard : ok
+ Bit Spread : ok
+ Bit Flip : ok
+ Walking Ones : ok
+ Walking Zeroes : ok
+ 8-bit Writes : ok
+ 16-bit Writes : ok
+Done.
+
+################ 2. DISCO — salud SMART + velocidad ################
+Disco analizado: /dev/sda (el de /home, donde irán las VMs)
+Conexión (lsusb -t; 5000M = USB 3.2 Gen1, 10000M = Gen2): |__ Port 002: Dev 002, If 0, Class=Mass Storage, Driver=uas, 5000M
+SMART: N/C (el adaptador USB no deja leerlo)
+-- Lectura (hdparm -Tt): caché y disco
+ Timing cached reads:   32738 MB in  2.00 seconds = 16394.07 MB/sec
+ Timing buffered disk reads: 1160 MB in  3.00 seconds = 386.33 MB/sec
+-- Escritura secuencial 1 GB sin caché (dd oflag=direct)
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 2.62739 s, 409 MB/s
+-- Lectura aleatoria 4K (fio, 30 s, típico de VMs arrancando)
+  read: IOPS=38.7k, BW=151MiB/s (158MB/s)(4531MiB/30001msec)
+    clat (usec): min=102, max=7535, avg=406.00, stdev=85.95
+     lat (usec): min=109, max=7542, avg=413.56, stdev=85.92
+
+################ 3. RED ################
+Interfaz: eno1 · Puerta de enlace: 172.16.222.1
+Velocidad de enlace negociada: 1000Mb/s (Wi-Fi no la muestra)
+-- Latencia y pérdida a la puerta de enlace (red local)
+10 packets transmitted, 10 received, 0% packet loss, time 9242ms
+rtt min/avg/max/mdev = 0.512/0.585/0.652/0.041 ms
+-- Latencia y pérdida a Internet (1.1.1.1, ICMP)
+10 packets transmitted, 0 received, 100% packet loss, time 9213ms
+
+   (si sale 100 % de pérdida, puede ser que la red bloquee el ping hacia fuera: se mira la prueba HTTPS)
+-- Tiempo de conexión HTTPS a deb.debian.org (TCP + TLS)
+HTTP 200 · conexión 1.179957 s · TLS 1.516057 s
+-- Descarga de 50 MB del mirror oficial de Debian (sigue redirecciones)
+Velocidad media: 3.7 MB/s (30 Mbit/s) · tiempo 14.2 s
+-- iperf3 entre dos equipos: N/C (no se indicó servidor). Comando: iperf3 -s en otro PC y volver a lanzar con su IP.
+
+Temperatura CPU al terminar: Package id 0: +59.0 C (high = +110.0 C, crit = +110.0 C)
+
+FIN DE LOS TESTS

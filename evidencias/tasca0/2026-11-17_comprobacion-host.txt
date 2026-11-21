@@ -1,0 +1,66 @@
+Comprobación del anfitrión — 2026-11-17 09:09:39 — equipo: asier
+
+=== Sistema operativo ===
+  Linux Mint 22.3
+  Kernel: 6.8.0-147-generic
+
+=== CPU y virtualización por hardware ===
+  Modelo: Intel(R) Core(TM) Ultra 5 125H
+  Núcleos físicos: 14 · Hilos: 18
+  [OK]    La CPU expone VT-x/AMD-V (necesario para VMs de 64 bits y Proxmox anidado).
+  [AVISO] Módulos KVM cargados (kvm_intel kvm). Pueden impedir arrancar VMs en VirtualBox (VERR_VMX_IN_VMX_ROOT_MODE).
+
+=== Memoria RAM ===
+                 total       usado       libre  compartido   búf/caché  disponible
+  Mem:            30Gi       8,2Gi        19Gi       1,5Gi       5,0Gi        22Gi
+  Inter:          15Gi          0B        15Gi
+  Total: 30,6 GB
+  [OK]    RAM holgada.
+
+=== Disco ===
+  S.ficheros     Tamaño Usados  Disp Uso% Montado en
+  /dev/sda3        858G   127G  693G  16% /home
+  Carpeta de VMs de VirtualBox: /home/batoi/VirtualBox VMs
+  S.ficheros     Tamaño Usados  Disp Uso% Montado en
+  /dev/sda3        858G   127G  693G  16% /home
+  (Estimación del proyecto: ~150 GB ocupados en discos dinámicos + ~25 GB de ISOs)
+  NAME      SIZE ROTA TRAN   MODEL
+  sda     931,5G    0 usb    EXCERIA PLUS
+  zram0     7,6G    0        
+  nvme0n1 953,9G    0 nvme   SAMSUNG MZVMA1T0HCLD-00BTW
+  (ROTA=1 disco mecánico · ROTA=0 SSD/NVMe)
+
+=== VirtualBox ===
+  [OK]    VirtualBox 7.0.20r163906
+  Pack no. 0:   Oracle VM VirtualBox Extension Pack
+  Version:        7.0.20
+  [OK]    El usuario está en el grupo vboxusers.
+  Redes solo-anfitrión existentes:
+  VMs registradas: 3
+  [AVISO] No existe /etc/vbox/networks.conf: VirtualBox solo deja usar 192.168.56.0/21 en solo-anfitrión (se arregla en la Fase 2).
+
+=== Git y GitHub ===
+  [OK]    git 2.43.0 · usuario: Asier
+  [AVISO] gh instalado pero sin login (gh auth login).
+
+=== Herramientas para Tasca 2 y Tasca 7 ===
+  [OK]    dmidecode
+  [OK]    smartctl
+  [OK]    lshw
+  [OK]    inxi
+  [OK]    sensors
+  [OK]    iostat
+  [OK]    sar
+  [OK]    memtester
+  [OK]    hdparm
+  [OK]    fio
+  [AVISO] falta iperf3 (paquete iperf3)
+  [OK]    ethtool
+  [AVISO] falta nvme (paquete nvme-cli)
+  [OK]    mokutil
+  [AVISO] falta traceroute (paquete traceroute)
+
+  Para instalar lo que falta (NO se ejecuta solo):
+  sudo apt update && sudo apt install iperf3 nvme-cli traceroute
+
+Fin de la comprobación.

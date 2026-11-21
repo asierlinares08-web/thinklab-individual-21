@@ -1,0 +1,36 @@
+# P14b · Server-Monitorizacion · copia de su configuración en TrueNAS (19/11/2026)
+$ ~/bin/32-copia-srv-mon.sh
+2026-11-19 18:03:30 OK srv-mon 2026-11-19_1803_srv-mon.tar.gz 424K
+
+## Qué hay dentro (resumen por carpeta)
+    300 etc/ssl
+    269 etc/apparmor.d
+     68 etc/alternatives
+     56 etc/systemd
+     34 etc/console-setup
+     23 etc/apt
+     21 etc/pam.d
+     18 etc/initramfs-tools
+     15 etc/default
+     14 etc/security
+     11 etc/init.d
+     11 etc/grub.d
+
+## Lo que NO está (comprobación):
+  etc/shadow: no está (bien)
+  etc/ssh/ssh_host_ed25519_key: no está (bien)
+  home/asier/.ssh/id_ed25519: no está (bien)
+  home/asier/.config/copias/opnsense-api.txt: no está (bien)
+
+## Lo que SÍ tiene que estar:
+etc/network/interfaces
+home/asier/bin/
+home/asier/bin/32-copia-srv-mon.sh
+home/asier/bin/vigila.sh
+home/asier/bin/30-copia-firewall.sh
+home/asier/.ssh/config
+home/asier/.ssh/id_ed25519.pub
+home/asier/.ssh/authorized_keys
+crontab-asier.txt
+paquetes.txt
+mdstat.txt

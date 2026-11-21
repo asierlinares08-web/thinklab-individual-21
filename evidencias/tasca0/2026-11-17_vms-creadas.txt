@@ -1,0 +1,104 @@
+VMs del laboratorio — 2026-11-17 11:27:07 — creadas con scripts/11-crear-vms.sh (VirtualBox 7.0.20r163906)
+Segunda ejecución del script: «Creadas (0) · Saltadas (11)» → el script es repetible.
+
+== VBoxManage list vms (las 3 primeras son anteriores, fuera de /ThinkLab-asier, y no se tocan)
+"Debian" {0912ccad-01b4-4616-981a-e3bae889aa60}
+"Windows11" {23a7b542-a9e9-42f6-abdb-1e037f8ce666}
+"Win 11 prueba" {7beb987b-f9e5-48aa-bef4-30d2369a7c4d}
+"FW1-MikroTik" {51e79621-0714-44cc-b892-1a7148434aba}
+"FW2-OPNsense" {f6aaad30-ad22-4f74-8f13-2def9dbaa1fc}
+"FW3-Debian-NFT" {865b07c8-3681-4d0a-9232-5e613e8c1a21}
+"Proxmox-Node1" {33eb1282-123c-4ae5-82ee-c03d89438040}
+"Proxmox-Node2" {9c6e426e-3460-48e2-8ce5-037a637ecc8b}
+"Proxmox-Node3" {ecf3e60b-de61-4e43-a855-99ebf9d3f0eb}
+"NAS-TrueNAS" {ca14ccbe-032b-4e2c-ab22-bed4cbab1f62}
+"WinServer-2025" {585414fe-35b4-487e-ac5f-6b527199a036}
+"Server-Monitorizacion" {727a1f7f-b9f5-410e-93bc-dd94466254ad}
+"Client-Win11" {e3ca825a-731c-4aa9-949f-fc87905e6c23}
+"Client-Linux" {d580f5a2-bf31-4e6b-8e95-dd5ca28caedf}
+
+== Resumen de cada VM del grupo /ThinkLab-asier (VBoxManage showvminfo, resumido)
+
+--- FW1-MikroTik
+  grupo=/ThinkLab-asier · tipo=Linux 2.6 / 3.x / 4.x / 5.x (64-bit) · vCPU=1 · RAM=288 MB · vídeo=16 MB vmsvga · firmware=BIOS · VT-x anidada=off · TPM=none
+  NIC 1:                       Attachment: NAT, Cable connected: on, Type: 82540EM, Promisc Policy: deny
+  NIC 2:                       Attachment: Internal Network 'LAN_21', Cable connected: on, Type: 82540EM, Promisc Policy: deny
+  SATA-0-0: disco chr-7.25.1.vdi · 128 MBytes · dynamic default
+
+--- FW2-OPNsense
+  grupo=/ThinkLab-asier · tipo=FreeBSD (64-bit) · vCPU=1 · RAM=3072 MB · vídeo=16 MB vmsvga · firmware=BIOS · VT-x anidada=off · TPM=none
+  NIC 1:                       Attachment: NAT, Cable connected: on, Type: 82540EM, Promisc Policy: deny
+  NIC 2:                       Attachment: Internal Network 'LAN_21', Cable connected: on, Type: 82540EM, Promisc Policy: deny
+  SATA-0-0: disco FW2-OPNsense.vdi · 16384 MBytes · dynamic default
+  SATA-1-0: DVD OPNsense-26.7-dvd-amd64.iso
+
+--- FW3-Debian-NFT
+  grupo=/ThinkLab-asier · tipo=Debian 12 Bookworm (64-bit) · vCPU=1 · RAM=512 MB · vídeo=16 MB vmsvga · firmware=BIOS · VT-x anidada=off · TPM=none
+  NIC 1:                       Attachment: NAT, Cable connected: on, Type: 82540EM, Promisc Policy: deny
+  NIC 2:                       Attachment: Internal Network 'LAN_21', Cable connected: on, Type: 82540EM, Promisc Policy: deny
+  SATA-0-0: disco FW3-Debian-NFT.vdi · 8192 MBytes · dynamic default
+  SATA-1-0: DVD debian-13.1.0-amd64-netinst.iso
+
+--- Proxmox-Node1
+  grupo=/ThinkLab-asier · tipo=Debian 12 Bookworm (64-bit) · vCPU=2 · RAM=3072 MB · vídeo=16 MB vmsvga · firmware=BIOS · VT-x anidada=on · TPM=none
+  NIC 1:                       Attachment: Internal Network 'LAN_21', Cable connected: on, Type: 82540EM, Promisc Policy: allow-all
+  SATA-0-0: disco Proxmox-Node1.vdi · 32768 MBytes · dynamic default
+  SATA-1-0: DVD proxmox-ve_9.2-1.iso
+
+--- Proxmox-Node2
+  grupo=/ThinkLab-asier · tipo=Debian 12 Bookworm (64-bit) · vCPU=2 · RAM=3072 MB · vídeo=16 MB vmsvga · firmware=BIOS · VT-x anidada=on · TPM=none
+  NIC 1:                       Attachment: Internal Network 'LAN_21', Cable connected: on, Type: 82540EM, Promisc Policy: allow-all
+  SATA-0-0: disco Proxmox-Node2.vdi · 32768 MBytes · dynamic default
+  SATA-1-0: DVD proxmox-ve_9.2-1.iso
+
+--- Proxmox-Node3
+  grupo=/ThinkLab-asier · tipo=Debian 12 Bookworm (64-bit) · vCPU=2 · RAM=3072 MB · vídeo=16 MB vmsvga · firmware=BIOS · VT-x anidada=on · TPM=none
+  NIC 1:                       Attachment: Internal Network 'LAN_21', Cable connected: on, Type: 82540EM, Promisc Policy: allow-all
+  SATA-0-0: disco Proxmox-Node3.vdi · 32768 MBytes · dynamic default
+  SATA-1-0: DVD proxmox-ve_9.2-1.iso
+
+--- NAS-TrueNAS
+  grupo=/ThinkLab-asier · tipo=Debian 12 Bookworm (64-bit) · vCPU=2 · RAM=8192 MB · vídeo=16 MB vmsvga · firmware=BIOS · VT-x anidada=off · TPM=none
+  NIC 1:                       Attachment: Internal Network 'LAN_21', Cable connected: on, Type: 82540EM, Promisc Policy: deny
+  SATA-0-0: disco NAS-TrueNAS-sistema.vdi · 16384 MBytes · dynamic default
+  SATA-1-0: disco NAS-TrueNAS-copias.vdi · 20480 MBytes · dynamic default
+  SATA-2-0: DVD TrueNAS-SCALE-25.10.7.iso
+
+--- WinServer-2025
+  grupo=/ThinkLab-asier · tipo=Windows 2022 (64-bit) · vCPU=2 · RAM=4096 MB · vídeo=128 MB vboxsvga · firmware=EFI · VT-x anidada=off · TPM=none
+  NIC 1:                       Attachment: Internal Network 'LAN_21', Cable connected: on, Type: 82540EM, Promisc Policy: deny
+  SATA-0-0: disco WinServer-2025.vdi · 51200 MBytes · dynamic default
+  SATA-1-0: DVD w2k25.iso
+
+--- Server-Monitorizacion
+  grupo=/ThinkLab-asier · tipo=Debian 12 Bookworm (64-bit) · vCPU=1 · RAM=1024 MB · vídeo=16 MB vmsvga · firmware=BIOS · VT-x anidada=off · TPM=none
+  NIC 1:                       Attachment: Internal Network 'LAN_21', Cable connected: on, Type: 82540EM, Promisc Policy: deny
+  SATA-0-0: disco Server-Monitorizacion.vdi · 10240 MBytes · dynamic default
+  SATA-2-0: disco raid-disco1.vdi · 1024 MBytes · dynamic default
+  SATA-3-0: disco raid-disco2.vdi · 1024 MBytes · dynamic default
+  SATA-4-0: disco raid-disco3.vdi · 1024 MBytes · dynamic default
+  SATA-5-0: disco raid-disco4.vdi · 1024 MBytes · dynamic default
+  SATA-6-0: disco raid-disco5.vdi · 1024 MBytes · dynamic default
+  SATA-7-0: disco raid-disco6.vdi · 1024 MBytes · dynamic default
+  SATA-8-0: disco raid-disco7.vdi · 1024 MBytes · dynamic default
+  SATA-9-0: DVD debian-13.1.0-amd64-netinst.iso
+
+--- Client-Win11
+  grupo=/ThinkLab-asier · tipo=Windows 11 (64-bit) · vCPU=2 · RAM=4096 MB · vídeo=128 MB vboxsvga · firmware=EFI · VT-x anidada=off · TPM=v2_0
+  NIC 1:                       Attachment: Internal Network 'LAN_21', Cable connected: on, Type: 82540EM, Promisc Policy: deny
+  SATA-0-0: disco Client-Win11.vdi · 65536 MBytes · dynamic default
+  SATA-1-0: DVD win11.iso
+
+--- Client-Linux
+  grupo=/ThinkLab-asier · tipo=Debian 12 Bookworm (64-bit) · vCPU=2 · RAM=3072 MB · vídeo=128 MB vmsvga · firmware=BIOS · VT-x anidada=off · TPM=none
+  NIC 1:                       Attachment: Internal Network 'LAN_21', Cable connected: on, Type: 82540EM, Promisc Policy: deny
+  SATA-0-0: disco Client-Linux.vdi · 25600 MBytes · dynamic default
+  SATA-1-0: DVD debian-13.1.0-amd64-netinst.iso
+
+== Secure Boot de Client-Win11: variables de la NVRAM UEFI (PK = clave de plataforma, KEK y db = claves de Microsoft)
+  KEK                              {8be4df61-93ca-11d2-aa0d-00e098032b8c}
+  db                               {d719b2cb-3d3a-4596-a3bc-dad00e67656f}
+  PK                               {8be4df61-93ca-11d2-aa0d-00e098032b8c}
+
+== Espacio ocupado (discos dinámicos recién creados)
+  53M	/home/batoi/VirtualBox VMs/ThinkLab-asier/

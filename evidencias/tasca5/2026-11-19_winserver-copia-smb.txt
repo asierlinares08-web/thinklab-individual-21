@@ -1,0 +1,40 @@
+# P14b · WinServer-2025 · copia en TrueNAS por SMB (19/11/2026)
+Lanzada en WinServer-2025 como Administrador (VBoxManage guestcontrol) con scripts/34-copia-winserver.ps1: exporta la configuración en texto y copia con robocopy la configuración y los Documentos/Escritorio de los usuarios a \\192.168.21.20\winserver\<fecha>.
+
+## Salida en Windows
+Copia \\192.168.21.20\winserver\2026-11-19_1807 : 9 ficheros, 17600 bytes, 13 s
+
+## En TrueNAS (desde srv-mon)
+./configuracion/administradores.csv
+./configuracion/directivas-seguridad.inf
+./configuracion/idioma-teclado.txt
+./configuracion/recursos-compartidos.csv
+./configuracion/red.txt
+./configuracion/roles-instalados.csv
+./configuracion/sistema.txt
+./configuracion/usuarios.csv
+./usuarios/Administrador/Documents/Datos/prueba-copia-P14b.txt
+
+--- roles-instalados.csv
+﻿"Name","DisplayName"
+"FileAndStorage-Services","Servicios de archivos y almacenamiento"
+"Storage-Services","Servicios de almacenamiento"
+"NET-Framework-45-Features",".NET Framework 4.8 Features"
+"NET-Framework-45-Core",".NET Framework 4.8"
+"NET-WCF-Services45","Servicios WCF"
+"NET-WCF-TCP-PortSharing45","Uso compartido de puertos TCP"
+"Windows-Defender","Antivirus de Microsoft Defender"
+"System-DataArchiver","Archivador de datos del sistema"
+"WoW64-Support","Compatibilidad con WoW64"
+"PowerShellRoot","Windows PowerShell"
+"PowerShell","Windows PowerShell 5.1"
+"WindowsAdminCenterSetup","Ẅïⁿđóщş Αđmīи €èⁿţĕŕ Šεţμρ"
+"Wireless-Networking","Wireless LAN Service"
+"XPS-Viewer","XPS Viewer"
+--- usuarios.csv
+﻿"Name","Enabled","Description"
+"Administrador","True","Cuenta integrada para la administración del equipo o dominio"
+"asier","True",""
+"DefaultAccount","False","Cuenta de usuario administrada por el sistema."
+"Invitado","False","Cuenta integrada para el acceso como invitado al equipo o dominio"
+"WDAGUtilityAccount","False","Una cuenta de usuario que el sistema administra y usa para escenarios de Protección de aplicaciones de Windows Defender."

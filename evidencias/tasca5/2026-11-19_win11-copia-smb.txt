@@ -1,0 +1,20 @@
+# P14b · Client-Win11 · copia de las carpetas del usuario en TrueNAS por SMB (19/11/2026)
+Lanzada en Client-Win11 como asier (VBoxManage guestcontrol) con un .bat: net use \\192.168.21.20\win11 (usuario asier de TrueNAS, /persistent:no, sin guardar la contraseña) + robocopy de Desktop, Documents y Pictures a una carpeta con fecha.
+
+## Salida en Windows
+[18:06:20,93] Inicio copia de C:\Users\asier en \\192.168.21.20\win11\2026-11-19_1806
+   Origen : C:\Users\asier\Desktop\
+   Origen : C:\Users\asier\Documents\
+   Origen : C:\Users\asier\Pictures\
+[18:06:21,06] Fin
+     Total de archivos en la lista:
+               1 archivos             52 bytes
+
+## Lo que hay en TrueNAS (visto desde srv-mon por SSH)
+.
+./2026-11-19_1806
+./2026-11-19_1806/Desktop
+./2026-11-19_1806/Documents
+./2026-11-19_1806/Documents/prueba-copia-P14b.txt
+./2026-11-19_1806/Pictures
+Documento de prueba P14b, 19/11/2026 18:06:11,02  

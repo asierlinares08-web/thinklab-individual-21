@@ -1,0 +1,39 @@
+# P14b · Proxmox · copias en TrueNAS por NFS (19/11/2026)
+## 1. Recurso NFS de TrueNAS visto desde pve1 y almacenamiento del clúster
+Export list for 192.168.21.20:
+/mnt/copias/proxmox 192.168.21.12,192.168.21.11,192.168.21.10
+nfs: copias-nas
+	export /mnt/copias/proxmox
+	path /mnt/pve/copias-nas
+	server 192.168.21.20
+	content backup
+	prune-backups keep-last=3
+
+
+## 2. vzdump de la VM 150 (en pve2, encendida → modo snapshot)
+INFO: Starting Backup of VM 150 (qemu)
+INFO: backup mode: snapshot
+INFO: creating vzdump archive '/mnt/pve/copias-nas/dump/vzdump-qemu-150-2026_11_19-18_02_46.vma.zst'
+INFO: transferred 8.00 GiB in 9 seconds (910.2 MiB/s)
+INFO: archive file size: 568MB
+INFO: Finished Backup of VM 150 (00:00:10)
+
+## 3. vzdump del CT 151 (en pve3, apagado → modo stop)
+INFO: Starting Backup of VM 151 (lxc)
+INFO: backup mode: stop
+INFO: creating vzdump archive '/mnt/pve/copias-nas/dump/vzdump-lxc-151-2026_11_19-18_02_57.tar.zst'
+INFO: Total bytes written: 582891520 (556MiB, 63MiB/s)
+INFO: archive file size: 159MB
+INFO: Finished Backup of VM 151 (00:00:12)
+
+## 4. Configuración del clúster y de la red de cada nodo
+-rw-r--r-- 1 root root 23076 Nov 19 18:03 2026-11-19_1803_pve1-config.tar.gz
+-rw-r--r-- 1 root root 23081 Nov 19 18:03 2026-11-19_1803_pve2-config.tar.gz
+-rw-r--r-- 1 root root 23078 Nov 19 18:03 2026-11-19_1803_pve3-config.tar.gz
+
+## 5. Lo que queda en TrueNAS
+Volid                                                         Format  Type           Size VMID
+copias-nas:backup/vzdump-lxc-151-2026_11_19-18_02_57.tar.zst  tar.zst backup    167222525 151
+copias-nas:backup/vzdump-qemu-150-2026_11_19-18_02_46.vma.zst vma.zst backup    596430594 150
+2.0K	/mnt/pve/copias-nas/config
+729M	/mnt/pve/copias-nas/dump

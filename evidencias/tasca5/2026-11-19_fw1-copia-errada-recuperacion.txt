@@ -1,0 +1,30 @@
+# P14a · FW1-MikroTik · copia, errada controlada y recuperación (19/11/2026, desde Server-Monitorizacion)
+## 1. Copia (scripts/30-copia-firewall.sh: /export terse + /system backup save, por SSH con clave → TrueNAS)
+2026-11-19 17:58:10 OK fw1-mikrotik 2026-11-19_1757_fw1.backup 2026-11-19_1757_fw1-export.rsc 2026-11-19_1757_sha256.txt 
+total 22
+-rw-r--r-- 1 asier asier   852 Nov 19 17:58 2026-11-19_1757_fw1-export.rsc
+-rw-r--r-- 1 asier asier 21112 Nov 19 17:58 2026-11-19_1757_fw1.backup
+-rw-r--r-- 1 asier asier   190 Nov 19 17:58 2026-11-19_1757_sha256.txt
+2026-11-19_1757_fw1.backup: OK
+2026-11-19_1757_fw1-export.rsc: OK
+
+## 2. Errada controlada: borrar la regla de NAT (17:58:38)
+
+
+## 3. Recuperación de la parte afectada desde la copia de TrueNAS (17:59:05)
+/ip firewall nat add action=masquerade chain=srcnat comment="P8 NAT de la LAN hacia Internet" out-interface=ether1
+Script file loaded and executed successfully
+0  ;;; P8 NAT de la LAN hacia Internet
+   chain=srcnat action=masquerade out-interface=ether1
+
+17:59:06 recuperado
+
+## 4. Vigilancia cada segundo (scripts/31-vigila-parada.sh). Solo los cambios de estado:
+17:58:25 ping_fw=OK internet=OK
+17:58:31 ping_fw=OK internet=--
+17:58:32 ping_fw=OK internet=OK
+17:58:41 ping_fw=OK internet=--
+17:59:06 ping_fw=OK internet=OK
+17:59:12 ping_fw=OK internet=--
+
+Nota: entre 17:58:41 y 17:59:05 TODAS las sondas fallan (errada). Fuera de ese tramo hay pérdidas sueltas (17:58:31, 17:59:12): en 40 s de prueba después, con la regla ya bien, 5 de 24 pings a 1.1.1.1 se pierden (~20 %). Con FW2 y FW3 no pasa. Causa N/C (límite de la licencia gratuita del CHR o el NAT de VirtualBox con ICMP).

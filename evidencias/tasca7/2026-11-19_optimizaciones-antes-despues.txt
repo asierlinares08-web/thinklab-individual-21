@@ -1,0 +1,40 @@
+# P18 · Optimizaciones de las VMs: antes y después (19/11/2026)
+
+## Optimización 1: FW2-OPNsense de 3072 MB a 1024 MB de RAM (VBoxManage modifyvm --memory 1024)
+### Antes (3072 MB)
+RAM de FW2: 3072 MB · RAM disponible en el anfitrión con FW2 apagado: 17759 MB
+18:52:03 startvm
+18:52:27 ping al .1 OK: 24 s
+18:52:31 Internet (ping + HTTPS con DNS del .1) OK: 28 s
+RAM disponible en el anfitrión con FW2 encendido (20 s después): 14874 MB
+### Después (1024 MB)
+RAM de FW2: 1024 MB · RAM disponible en el anfitrión con FW2 apagado: 22611 MB
+18:56:41 startvm
+18:57:05 ping al .1 OK: 24 s
+18:57:09 Internet (ping + HTTPS con DNS del .1) OK: 28 s
+RAM disponible en el anfitrión con FW2 encendido (20 s después): 21450 MB
+### Copia de la configuración por la API con 1 GB (sigue funcionando):
+2026-11-19 18:59:33 OK fw2-opnsense 2026-11-19_1859_fw2-config.xml 2026-11-19_1859_sha256.txt 
+
+## Optimización 2: tarjeta de red paravirtualizada virtio-net en srv-mon y NAS-TrueNAS (antes Intel PRO/1000 MT 82540EM emulada)
+(VBoxManage modifyvm <VM> --nictype1 virtio; dentro: driver virtio_net, mismos nombres enp0s3 y mismas IP)
+### Antes (82540EM)
+## iperf3 srv-mon (192.168.21.40) → NAS-TrueNAS (192.168.21.20), 20 s, por LAN_21
+--- srv-mon envía
+[  5]   0.00-20.00  sec  16.8 GBytes  7.21 Gbits/sec  87162            sender
+[  5]   0.00-20.00  sec  16.8 GBytes  7.21 Gbits/sec                  receiver
+CPU Utilization: local/sender 26.5% (0.7%u/25.8%s), remote/receiver 43.1% (1.4%u/41.7%s)
+--- srv-mon recibe (-R)
+[  5]   0.00-20.00  sec  13.9 GBytes  5.97 Gbits/sec  47070            sender
+[  5]   0.00-20.00  sec  13.9 GBytes  5.97 Gbits/sec                  receiver
+Copia real por SSH (srv-mon → TrueNAS, datos aleatorios): 12500 MB en 95 s = 131 MB/s
+### Después (virtio)
+## iperf3 srv-mon (192.168.21.40) → NAS-TrueNAS (192.168.21.20), 20 s, por LAN_21
+--- srv-mon envía
+[  5]   0.00-20.00  sec  29.2 GBytes  12.5 Gbits/sec  272946            sender
+[  5]   0.00-20.00  sec  29.2 GBytes  12.5 Gbits/sec                  receiver
+CPU Utilization: local/sender 27.2% (1.1%u/26.1%s), remote/receiver 31.5% (2.1%u/29.3%s)
+--- srv-mon recibe (-R)
+[  5]   0.00-20.00  sec  28.9 GBytes  12.4 Gbits/sec  298919            sender
+[  5]   0.00-20.00  sec  28.9 GBytes  12.4 Gbits/sec                  receiver
+Copia real por SSH (srv-mon → TrueNAS, datos aleatorios): 9000 MB en 60 s = 150 MB/s

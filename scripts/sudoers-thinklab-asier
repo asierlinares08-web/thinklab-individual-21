@@ -1,0 +1,11 @@
+# /etc/sudoers.d/thinklab-asier — ThinkLab · parte individual de Asier
+# Permite al usuario batoi ejecutar SIN contraseña SOLO los dos scripts de la Fase 1 (Tasca 2),
+# y solo con el argumento «clase» o «casa». Nada más (ni apt ni otros comandos).
+# Las rutas apuntan a COPIAS propiedad de root (/usr/local/lib/thinklab-asier/, permisos 755):
+# si apuntaran al repo, el usuario podría editar el script y ejecutar cualquier cosa como root.
+# BORRAR AL TERMINAR EL PROYECTO:
+#   sudo rm /etc/sudoers.d/thinklab-asier && sudo rm -r /usr/local/lib/thinklab-asier
+batoi ALL=(root) NOPASSWD: /usr/local/lib/thinklab-asier/01-inventario-hw.sh clase, \
+                           /usr/local/lib/thinklab-asier/01-inventario-hw.sh casa, \
+                           /usr/local/lib/thinklab-asier/02-tests-diagnostico.sh clase, \
+                           /usr/local/lib/thinklab-asier/02-tests-diagnostico.sh casa
