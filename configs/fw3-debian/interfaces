@@ -1,0 +1,18 @@
+# /etc/network/interfaces · FW3-Debian-NFT (P7)
+# Red de VirtualBox: adaptador 1 = NAT (WAN) · adaptador 2 = red interna LAN_21 (LAN)
+
+source /etc/network/interfaces.d/*
+
+# Loopback (127.0.0.1): la necesita el propio sistema
+auto lo
+iface lo inet loopback
+
+# WAN: enp0s3, IP por DHCP del NAT de VirtualBox (10.0.2.15, puerta de enlace 10.0.2.2)
+auto enp0s3
+iface enp0s3 inet dhcp
+
+# LAN: enp0s8, IP fija 192.168.21.1/24 (la puerta de enlace de toda la LAN_21)
+# SIN "gateway": la única ruta por defecto es la de la WAN (si hubiera dos, el tráfico podría salir por la LAN)
+auto enp0s8
+iface enp0s8 inet static
+    address 192.168.21.1/24

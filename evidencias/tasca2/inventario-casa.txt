@@ -1,0 +1,177 @@
+INVENTARIO DE HARDWARE — equipo: casa (asier) — 2026-11-17 17:43:49
+Condiciones: uptime up 4 minutes · carga 3.11 1.19 0.49
+
+################ 1. Equipo y placa base ################
+  Manufacturer: Gigabyte Technology Co., Ltd.
+  Product Name: B450 GAMING X
+  Version: Default string
+  Serial Number: [OCULTO]
+  Manufacturer: Gigabyte Technology Co., Ltd.
+  Product Name: B450 GAMING X
+  Version: Default string
+  Chasis: Desktop
+
+################ 2. Firmware y arranque ################
+  Modo de arranque: UEFI
+  Secure Boot: SecureBoot enabled
+  Vendor: American Megatrends International, LLC.
+  Version: F62d
+  Release Date: 10/13/2021
+  Tiempo de arranque:
+    Startup finished in 11.862s (firmware) + 7.146s (loader) + 4.925s (kernel) + 13.718s (userspace) = 37.652s 
+    graphical.target reached after 13.689s in userspace.
+  Servicios que más tardan:
+    5.573s NetworkManager-wait-online.service
+    2.937s systemd-udev-settle.service
+    1.653s home.mount
+    1.535s docker.service
+    1.409s zfs-load-module.service
+
+################ 3. CPU ################
+  Architecture:                            x86_64
+  CPU(s):                                  12
+  Model name:                              AMD Ryzen 5 5600X 6-Core Processor
+  BIOS Model name:                         AMD Ryzen 5 5600X 6-Core Processor              Unknown CPU @ 3.7GHz
+  Thread(s) per core:                      2
+  Core(s) per socket:                      6
+  Socket(s):                               1
+  CPU(s) scaling MHz:                      86%
+  CPU max MHz:                             4651.5488
+  Virtualization:                          AMD-V
+  L2 cache:                                3 MiB (6 instances)
+  L3 cache:                                32 MiB (1 instance)
+
+################ 4. Memoria RAM ################
+                 total        used        free      shared  buff/cache   available
+  Mem:            31Gi       6.4Gi        21Gi        53Mi       3.4Gi        24Gi
+  Swap:           15Gi          0B        15Gi
+  Capacidad máxima y ranuras:
+    Maximum Capacity: 128 GB
+    Number Of Devices: 4
+  Módulos (ranura · tamaño · tipo · velocidad):
+     DIMM 0 · 16 GB · DDR4 · 2400 MT/s
+     DIMM 1 · No Module Installed · Unknown · 2400 MT/s
+     DIMM 0 · 16 GB · DDR4 · 2400 MT/s
+     DIMM 1 · No Module Installed · Unknown · 2400 MT/s
+
+################ 5. Discos ################
+  NAME          SIZE TYPE ROTA TRAN   MODEL                  FSTYPE MOUNTPOINT
+  sda         931.5G disk    0 usb    EXCERIA PLUS                  
+  |-sda1        509M part    0                               vfat   /boot/efi
+  |-sda2       58.6G part    0                               ext4   /
+  `-sda3      872.4G part    0                               ext4   /home
+  sdb           1.8T disk    1 usb    PS4 Game Drive                
+  |-sdb1         16M part    1                                      
+  `-sdb2        1.8T part    1                               ntfs   /media/batoi/asier
+  zram0         7.8G disk    0                                      [SWAP]
+  nvme0n1     476.9G disk    0 nvme   GIGABYTE GP-GM30512G-G        
+  |-nvme0n1p1   100M part    0 nvme                          vfat   
+  |-nvme0n1p2    16M part    0 nvme                                 
+  |-nvme0n1p3   476G part    0 nvme                          ntfs   
+  `-nvme0n1p4   871M part    0 nvme                          ntfs   
+  (ROTA=1 mecánico · ROTA=0 SSD/NVMe)
+  Velocidad negociada de los discos USB (lsusb -t: 480M=USB 2.0 · 5000M=USB 3.2 Gen1 · 10000M=Gen2 · 20000M=Gen2x2):
+    /:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/10p, 480M
+    /:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
+    /:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 480M
+    /:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
+        |__ Port 003: Dev 002, If 0, Class=Mass Storage, Driver=uas, 5000M
+        |__ Port 004: Dev 003, If 0, Class=Mass Storage, Driver=uas, 5000M
+  --- /dev/sda ---
+  --- /dev/sdb ---
+  --- /dev/nvme0n1 ---
+    Model Number:                       GIGABYTE GP-GM30512G-G
+    NVMe Version:                       1.3
+    Namespace 1 Size/Capacity:          512,110,190,592 [512 GB]
+    SMART overall-health self-assessment test result: PASSED
+
+################ 6. Red ################
+  lo               UNKNOWN        127.0.0.1/8 ::1/128 
+  eno1             DOWN           
+  wlp14s0          UP             192.168.1.67/24 [IPv6 OCULTA] 
+  docker0          DOWN           172.17.0.1/16 
+  Ruta por defecto: default via 192.168.1.1 dev wlp14s0 proto dhcp src 192.168.1.67 metric 600 
+  0a:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller (rev 16)
+  0e:00.0 Network controller: Realtek Semiconductor Co., Ltd. RTL8812AE 802.11ac PCIe Wireless Network Adapter (rev 01)
+  Velocidad de enlace eno1: Unknown!
+
+################ 7. Gráfica, USB y periféricos ################
+  0f:00.0 VGA compatible controller: NVIDIA Corporation GA106 [GeForce RTX 3060 Lite Hash Rate] (rev a1)
+  Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+  Bus 001 Device 002: ID 046d:0acb Logitech, Inc. G435 Wireless Gaming Headset
+  Bus 001 Device 003: ID 048d:8297 Integrated Technology Express, Inc. IT8297 RGB LED Controller
+  Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+  Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+  Bus 003 Device 002: ID 046d:c336 Logitech, Inc. G213 Prodigy Gaming Keyboard
+  Bus 003 Device 003: ID 046d:c09d Logitech, Inc. G203 LIGHTSYNC Gaming Mouse
+  Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+  Bus 004 Device 002: ID 30de:1000 KIOXIA EXCERIA PLUS
+  Bus 004 Device 003: ID 0bc2:ab18 Seagate RSS LLC PS4 Game Drive
+
+################ 8. Alimentación ################
+  (La potencia de la fuente de un sobremesa no se lee por software: mirar la etiqueta → anotar o N/C)
+
+################ 9. Temperaturas ################
+
+################ 10. Resumen inxi (si está) ################
+  System:
+    Kernel: 6.8.0-147-generic arch: x86_64 bits: 64 compiler: gcc v: 13.3.0
+    Desktop: Cinnamon v: 6.6.9 Distro: Linux Mint 22.3 Zena base: Ubuntu 24.04 noble
+  Machine:
+    Type: Desktop Mobo: Gigabyte model: B450 GAMING X serial: [OCULTO] UEFI: American Megatrends LLC.
+      v: F62d date: 10/13/2021
+  CPU:
+    Info: 6-core model: AMD Ryzen 5 5600X bits: 64 type: MT MCP arch: Zen 3+ rev: 0 cache:
+      L1: 384 KiB L2: 3 MiB L3: 32 MiB
+    Speed (MHz): avg: 2200 min/max: 2200/4652 boost: enabled cores: 1: 2200 2: 2200 3: 2200 4: 2200
+      5: 2200 6: 2200 7: 2200 8: 2200 9: 2200 10: 2200 11: 2200 12: 2200 bogomips: 88804
+    Flags: avx avx2 ht lm nx pae sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3 svm
+  Graphics:
+    Device-1: NVIDIA GA106 [GeForce RTX 3060 Lite Hash Rate] vendor: Gigabyte driver: nvidia
+      v: 595.99.02 arch: Ampere bus-ID: 0f:00.0
+    Display: server: X.Org v: 21.1.11 with: Xwayland v: 23.2.6 driver: X: loaded: nvidia
+      unloaded: fbdev,modesetting,nouveau,vesa gpu: nv_platform,nvidia,nvidia-nvswitch resolution:
+      1: 1920x1080~60Hz 2: 1920x1080~60Hz
+    API: EGL v: 1.5 drivers: nvidia,swrast platforms: active: gbm,x11,surfaceless,device
+      inactive: wayland,device-1
+    API: OpenGL v: 4.6.0 compat-v: 4.5 vendor: nvidia mesa v: 595.99.02 glx-v: 1.4
+      direct-render: yes renderer: NVIDIA GeForce RTX 3060/PCIe/SSE2
+    API: Vulkan v: 1.3.275 drivers: N/A surfaces: xcb,xlib devices: 2
+  Audio:
+    Device-1: NVIDIA GA106 High Definition Audio vendor: Gigabyte driver: snd_hda_intel v: kernel
+      bus-ID: 0f:00.1
+    Device-2: AMD Starship/Matisse HD Audio vendor: Gigabyte driver: snd_hda_intel v: kernel
+      bus-ID: 11:00.4
+    Device-3: Logitech G435 Wireless Gaming Headset driver: hid-generic,snd-usb-audio,usbhid
+      type: USB bus-ID: 1-4:2
+    API: ALSA v: k6.8.0-147-generic status: kernel-api
+    Server-1: PipeWire v: 1.0.5 status: n/a (root, process)
+  Network:
+    Device-1: Realtek RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet vendor: Gigabyte
+      driver: r8169 v: kernel port: d000 bus-ID: 0a:00.0
+    IF: eno1 state: down mac: <filter>
+    Device-2: Realtek RTL8812AE 802.11ac PCIe Wireless Network Adapter driver: rtl8821ae v: kernel
+      port: c000 bus-ID: 0e:00.0
+    IF: wlp14s0 state: up mac: <filter>
+    IF-ID-1: docker0 state: down mac: <filter>
+  Drives:
+    Local Storage: total: 3.19 TiB used: 306.38 GiB (9.4%)
+    ID-1: /dev/nvme0n1 vendor: Gigabyte model: GP-GM30512G-G size: 476.94 GiB temp: 41.9 C
+    ID-2: /dev/sda vendor: KIOXIA model: EXCERIA PLUS size: 931.51 GiB type: USB
+    ID-3: /dev/sdb vendor: Seagate model: PS4 Game Drive size: 1.82 TiB type: USB
+  Partition:
+    ID-1: / size: 57.36 GiB used: 37.37 GiB (65.2%) fs: ext4 dev: /dev/sda2
+    ID-2: /boot/efi size: 508 MiB used: 16.1 MiB (3.2%) fs: vfat dev: /dev/sda1
+    ID-3: /home size: 857.67 GiB used: 139.5 GiB (16.3%) fs: ext4 dev: /dev/sda3
+  Swap:
+    ID-1: swap-1 type: file size: 8 GiB used: 0 KiB (0.0%) file: /swapfile
+    ID-2: swap-2 type: zram size: 7.82 GiB used: 0 KiB (0.0%) dev: /dev/zram0
+  Sensors:
+    System Temperatures: cpu: 53.8 C mobo: 25.0 C gpu: nvidia temp: 33 C
+    Fan Speeds (rpm): N/A gpu: nvidia fan: 0%
+  Info:
+    Memory: total: 32 GiB available: 31.27 GiB used: 5.79 GiB (18.5%)
+    Processes: 400 Uptime: 5m Init: systemd target: graphical (5)
+    Packages: 2429 Compilers: gcc: 13.3.0 Client: shell wrapper v: 5.2.21-release inxi: 3.3.34
+
+FIN DEL INVENTARIO

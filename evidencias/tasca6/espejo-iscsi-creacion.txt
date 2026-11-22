@@ -1,0 +1,35 @@
+
+=================== 1. Iniciador iSCSI (open-iscsi) con un nombre fijo (19:02:14)
+InitiatorName=iqn.2026-11.local.thinklab:srv-mon
+
+=================== 2. Descubrir y conectar el target de TrueNAS (y que se conecte solo al arrancar) (19:02:25)
+192.168.21.20:3260,1 iqn.2005-10.org.freenas.ctl:espejo
+Login to [iface: default, target: iqn.2005-10.org.freenas.ctl:espejo, portal: 192.168.21.20,3260] successful.
+tcp: [1] 192.168.21.20:3260,1 iqn.2005-10.org.freenas.ctl:espejo (non-flash)
+Disco local : /dev/sdb (   1G VBOX HARDDISK)
+Disco remoto: /dev/sdi (   1G TrueNAS  iSCSI Disk)
+
+=================== 3. RAID 1 entre los dos (bitmap interno: si el remoto se va un rato, al volver solo se copia lo que ha cambiado) (19:02:30)
+mdadm: Note: this array has metadata at the start and
+    --metadata=0.90
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md2 started.
+md2 : active raid1 sdi[1] sdb[0]
+      1046528 blocks super 1.2 [2/2] [UU]
+      bitmap: 1/1 pages [4KB], 65536KB chunk
+
+/dev/md2:
+        Raid Level : raid1
+        Array Size : 1046528 (1022.00 MiB 1071.64 MB)
+     Intent Bitmap : Internal
+             State : active 
+    Active Devices : 2
+       0       8       16        0      active sync   /dev/sdb
+       1       8      128        1      active sync   /dev/sdi
+/dev/md2        988M  101M  821M  11% /mnt/espejo
+
+=================== 4. Persistencia: el disco remoto llega por la red, así que el montaje espera a la red (_netdev) y no bloquea el arranque (nofail) (19:02:39)
+ARRAY /dev/md2 metadata=1.2 UUID=…
+LABEL=espejo /mnt/espejo ext4 defaults,_netdev,nofail 0 0
+update-initramfs: Generating /boot/initrd.img-6.12.117+deb13-amd64
+       use 'systemctl daemon-reload' to reload

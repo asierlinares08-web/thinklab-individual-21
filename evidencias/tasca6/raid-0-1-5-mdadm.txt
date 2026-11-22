@@ -1,0 +1,178 @@
+
+=================== 0. Preparación (18:18:28)
+mdadm - v4.4 - 2024-11-07 - Debian 4.4-11
+NAME SIZE TYPE
+sdb    1G disk
+sdc    1G disk
+sdd    1G disk
+sde    1G disk
+sdf    1G disk
+sdg    1G disk
+sdh    1G disk
+
+=================== Referencia: velocidad de un disco solo (sdh, antes de usarlo) (18:18:40)
+209715200 bytes (210 MB, 200 MiB) copied, 0.112659 s, 1.9 GB/s
+
+=================== Crear /dev/md0 (RAID 0) con sdb sdc (18:18:40)
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md0 started.
+md0 : active raid0 sdc[1] sdb[0]
+      2093056 blocks super 1.2 512k chunks
+      
+        Raid Level : raid0
+        Array Size : 2093056 (2044.00 MiB 2143.29 MB)
+      Raid Devices : 2
+             State : clean 
+        Chunk Size : 512K
+/dev/md0        2.0G   51M  1.8G   3% /mnt/raid0
+Escritura 200 MB (oflag=direct): 209715200 bytes (210 MB, 200 MiB) copied, 0.0767036 s, 2.7 GB/s
+
+=================== Crear /dev/md1 (RAID 1) con sdd sde (18:18:41)
+mdadm: Note: this array has metadata at the start and
+    may not be suitable as a boot device.  If you plan to
+    store '/boot' on this device please ensure that
+    your boot-loader understands md/v1.x metadata, or use
+    --metadata=0.90
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md1 started.
+md1 : active raid1 sde[1] sdd[0]
+      1046528 blocks super 1.2 [2/2] [UU]
+      
+        Raid Level : raid1
+        Array Size : 1046528 (1022.00 MiB 1071.64 MB)
+      Raid Devices : 2
+             State : active 
+/dev/md1        988M   51M  871M   6% /mnt/raid1
+Escritura 200 MB (oflag=direct): 209715200 bytes (210 MB, 200 MiB) copied, 0.209206 s, 1.0 GB/s
+
+=================== Crear /dev/md5 (RAID 5) con sdf sdg sdh (18:18:47)
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md5 started.
+md5 : active raid5 sdh[3] sdg[1] sdf[0]
+      2093056 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [UUU]
+      
+        Raid Level : raid5
+        Array Size : 2093056 (2044.00 MiB 2143.29 MB)
+      Raid Devices : 3
+             State : active 
+        Chunk Size : 512K
+/dev/md5        2.0G   51M  1.8G   3% /mnt/raid5
+Escritura 200 MB (oflag=direct): 209715200 bytes (210 MB, 200 MiB) copied, 0.20177 s, 1.0 GB/s
+
+=================== Fallo controlado en /dev/md1 (RAID 1): se marca /dev/sde como fallido (18:18:54)
+md1 : active raid1 sde[1](F) sdd[0]
+      1046528 blocks super 1.2 [2/1] [U_]
+      
+             State : clean, degraded 
+    Failed Devices : 1
+¿Los datos siguen bien con el RAID degradado?
+prueba.bin: OK
+
+=================== Reconstrucción de /dev/md1: quitar sde y volver a añadirlo (como si fuera un disco nuevo) (18:18:54)
+mdadm: hot removed /dev/sde from /dev/md1
+mdadm: added /dev/sde
+md1 : active raid1 sde[2] sdd[0]
+      1046528 blocks super 1.2 [2/1] [U_]
+      [===>.................]  recovery = 19.1% (200832/1046528) finish=0.0min speed=200832K/sec
+      
+Reconstrucción terminada en 7 s
+md1 : active raid1 sde[2] sdd[0]
+      1046528 blocks super 1.2 [2/2] [UU]
+      
+             State : clean 
+    Active Devices : 2
+    Failed Devices : 0
+prueba.bin: OK
+
+=================== Fallo controlado en /dev/md5 (RAID 5): se marca /dev/sdg como fallido (18:19:02)
+md5 : active raid5 sdh[3] sdg[1](F) sdf[0]
+      2093056 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/2] [U_U]
+      
+             State : clean, degraded 
+    Failed Devices : 1
+¿Los datos siguen bien con el RAID degradado?
+prueba.bin: OK
+
+=================== Reconstrucción de /dev/md5: quitar sdg y volver a añadirlo (como si fuera un disco nuevo) (18:19:02)
+mdadm: hot removed /dev/sdg from /dev/md5
+mdadm: added /dev/sdg
+md5 : active raid5 sdg[4] sdh[3] sdf[0]
+      2093056 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/2] [U_U]
+      [===>.................]  recovery = 19.3% (203008/1046528) finish=0.0min speed=203008K/sec
+      
+Reconstrucción terminada en 7 s
+md5 : active raid5 sdg[4] sdh[3] sdf[0]
+      2093056 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [UUU]
+      
+             State : clean 
+    Active Devices : 3
+    Failed Devices : 0
+prueba.bin: OK
+
+=================== Fallo en RAID 0: no tiene redundancia (18:19:09)
+mdadm no deja marcar un disco como fallido en RAID 0:
+mdadm: Cannot remove /dev/sdc from /dev/md0, array will be failed.
+Simulamos que el disco sdc se rompe: se desmonta, se para el RAID y se borra sdc.
+mdadm: stopped /dev/md0
+Intento de volver a montar el RAID 0 solo con sdb:
+mdadm: /dev/md0 assembled from 1 drive - not enough to start the array.
+mdadm: failed to RUN_ARRAY /dev/md0: Invalid argument
+mdadm: Not enough devices to start the array.
+md0 no existe: el RAID 0 y sus datos se han perdido.
+sdb y sdc quedan libres (se usarán en el P19).
+
+=================== Persistencia: RAID 1 y RAID 5 arrancan solos (18:19:09)
+ARRAY /dev/md1 metadata=1.2 UUID=…
+ARRAY /dev/md5 metadata=1.2 UUID=…
+update-initramfs: Generating /boot/initrd.img-6.12.117+deb13-amd64
+
+=================== Estado final (18:19:14)
+Personalities : [raid0] [raid1] [raid6] [raid5] [raid4] 
+md5 : active raid5 sdg[4] sdh[3] sdf[0]
+      2093056 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [UUU]
+      
+md1 : active raid1 sde[2] sdd[0]
+      1046528 blocks super 1.2 [2/2] [UU]
+      
+unused devices: <none>
+/dev/md1        988M   51M  871M   6% /mnt/raid1
+/dev/md5        2.0G   51M  1.8G   3% /mnt/raid5
+
+=================== Después de reiniciar srv-mon (18:19:48)
+up 0 minutes
+md1 : active raid1 sde[2] sdd[0]
+      1046528 blocks super 1.2 [2/2] [UU]
+--
+md5 : active raid5 sdf[0] sdc[3] sdg[4]
+      2093056 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [UUU]
+├─/mnt/raid1 /dev/md1  987,4M
+└─/mnt/raid5 /dev/md5    1,9G
+prueba.bin: La suma coincide
+prueba.bin: La suma coincide
+NAME   SIZE TYPE  FSTYPE            MOUNTPOINT
+sdb      1G disk                    
+sdc      1G disk  linux_raid_member 
+└─md5    2G raid5 ext4              /mnt/raid5
+sdd      1G disk  linux_raid_member 
+└─md1 1022M raid1 ext4              /mnt/raid1
+sde      1G disk  linux_raid_member 
+└─md1 1022M raid1 ext4              /mnt/raid1
+sdf      1G disk  linux_raid_member 
+└─md5    2G raid5 ext4              /mnt/raid5
+sdg      1G disk  linux_raid_member 
+└─md5    2G raid5 ext4              /mnt/raid5
+sdh      1G disk                    
+ata-3 sdb
+ata-3 sdb
+ata-4 sdc
+ata-4 sdc
+ata-5 sdh
+ata-5 sdh
+ata-6 sdd
+ata-6 sdd
+ata-7 sde
+ata-7 sde
+ata-8 sdf
+ata-8 sdf
+ata-9 sdg
+ata-9 sdg

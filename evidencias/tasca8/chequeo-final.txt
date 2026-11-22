@@ -1,0 +1,239 @@
+# Chequeo funcional final · 21/11/2026 · PC de clase
+# Método: un solo firewall encendido cada vez. Client-Linux ejecuta scripts/60-chequeo-cliente.sh y deja la salida en TrueNAS;
+# srv-mon la recoge (SSH de gestión, 127.0.0.1:2222). Windows: VBoxManage guestcontrol. Sin MACs (ip -4) ni contraseñas.
+
+################ ESCENARIO 1 · FW2-OPNsense + Client-Linux + srv-mon + NAS + 3 Proxmox
+
+### Client-Linux · firewall activo: fw2 · 2026-11-21 14:00:45
+--- ip -4 -br a / ip route
+lo               UNKNOWN        127.0.0.1/8 
+enp0s3           UP             192.168.21.60/24 
+default via 192.168.21.1 dev enp0s3 proto static metric 100 
+192.168.21.0/24 dev enp0s3 proto kernel scope link src 192.168.21.60 metric 100 
+--- ping -c 3 192.168.21.1
+3 packets transmitted, 3 received, 0% packet loss, time 2030ms
+rtt min/avg/max/mdev = 0.154/0.233/0.320/0.068 ms
+--- wget https://deb.debian.org (código HTTP)
+  HTTP/1.1 200 OK
+--- traceroute -n -m 4 1.1.1.1 (el primer salto tiene que ser el .1)
+traceroute to 1.1.1.1 (1.1.1.1), 4 hops max, 60 byte packets
+ 1  192.168.21.1  0.320 ms  0.297 ms  0.279 ms
+ 2  10.0.2.2  0.538 ms  0.514 ms  0.483 ms
+ 3  * * *
+ 4  1.1.1.1  4.609 ms  4.621 ms  4.755 ms
+
+### PROXMOX · 2026-11-21 14:01:22
+--- pvecm status (pve1)
+Name:             thinklab
+Nodes:            3
+Node ID:          0x00000001
+Quorate:          Yes
+Expected votes:   3
+Total votes:      3
+Flags:            Quorate 
+0x00000001          1 192.168.21.10 (local)
+0x00000002          1 192.168.21.11
+0x00000003          1 192.168.21.12
+qemu/150 vm150-debian pve2 stopped
+lxc/151 ct151 pve3 stopped
+--- arrancar VM150 (pve2) y CT151 (pve3)
+qm start 150: OK
+pct start 151: OK
+status: running
+status: running
+--- responden por la red
+2 packets transmitted, 2 received, 0% packet loss, time 1010ms
+rtt min/avg/max/mdev = 0.380/0.472/0.564/0.092 ms
+2 packets transmitted, 2 received, 0% packet loss, time 1022ms
+rtt min/avg/max/mdev = 0.250/0.326/0.402/0.076 ms
+vm150
+up 0 minutes
+ct151
+eth0@if4         UP             192.168.21.151/24 
+
+### TRUENAS · 2026-11-21 14:02:49
+--- zpool status copias
+  pool: copias
+ state: ONLINE
+	copias                                  ONLINE       0     0     0
+	  50e6e524-d8db-4c59-8846-865d153b6b78  ONLINE       0     0     0
+errors: No known data errors
+copias	19.5G	3.87G	15.6G	ONLINE
+--- copias por dataset (número de ficheros, tamaño y la más reciente)
+asier             1 ficheros   6.5K  última: 
+cliente-linux     5 ficheros    27M  última: 2026-11-19_1812_home-asier.sha256
+fw1-mikrotik      3 ficheros    30K  última: 2026-11-19_1757_fw1-export.rsc
+fw2-opnsense     11 ficheros   154K  última: 2026-11-19_1859_sha256.txt
+fw3-debian        3 ficheros    22K  última: 2026-11-19_1751_fw3-config.tar.gz
+proxmox          11 ficheros   1.9G  última: dump
+srv-mon           6 ficheros   1.3M  última: 2026-11-19_1835_sha256.txt
+win11             0 ficheros    27K  última: 2026-11-19_1806
+winserver         0 ficheros   118K  última: 2026-11-19_1807
+
+### SERVER-MONITORIZACION · 2026-11-21 14:02:49
+--- /proc/mdstat
+Personalities : [raid1] [raid6] [raid5] [raid4] [raid0] [raid10] 
+md2 : active raid1 sdi[1] sdb[0]
+      1046528 blocks super 1.2 [2/2] [UU]
+      bitmap: 0/1 pages [0KB], 65536KB chunk
+
+md1 : active raid1 sde[2] sdd[0]
+      1046528 blocks super 1.2 [2/2] [UU]
+      
+md5 : active raid5 sdh[3] sdf[0] sdg[4]
+      2093056 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [UUU]
+      
+unused devices: <none>
+--- discos del espejo md2 (by-path: el iSCSI sale como ip-192.168.21.20:3260-iscsi)
+ip-192.168.21.20:3260-iscsi-iqn.2005-10.org.freenas.ctl:espejo-lun-0 -> ../../sdi
+NAME   SIZE TRAN   TYPE
+sdb      1G sata   disk
+└─md2 1022M        raid1
+sdi      1G iscsi  disk
+└─md2 1022M        raid1
+--- servicio espejo-readd
+enabled
+inactive
+--- sesión iSCSI
+session1
+iqn.2005-10.org.freenas.ctl:espejo
+LOGGED_IN
+--- crontab de asier
+30 2 * * * /home/asier/bin/36-copias-auto.sh
+--- última ejecución en ~/copias.log
+2026-11-19 18:35:46 === Inicio de las copias automáticas
+2026-11-19 18:35:57 OK fw2-opnsense 2026-11-19_1835_fw2-config.xml 2026-11-19_1835_sha256.txt 
+2026-11-19 18:35:57 OK    firewall
+2026-11-19 18:35:58 OK srv-mon 2026-11-19_1835_srv-mon.tar.gz 428K
+2026-11-19 18:35:58 OK    srv-mon
+2026-11-19 18:36:01 --    proxmox-pve1 apagado: no se copia
+2026-11-19 18:36:04 --    proxmox-pve2 apagado: no se copia
+2026-11-19 18:36:07 --    proxmox-pve3 apagado: no se copia
+2026-11-19 18:36:07 OK    truenas-config
+2026-11-19 18:36:07 OK    limpieza-nas
+2026-11-19 18:36:07 === Fin (todo OK)
+2026-11-19 18:59:33 OK fw2-opnsense 2026-11-19_1859_fw2-config.xml 2026-11-19_1859_sha256.txt 
+
+--- Copias automáticas: ejecución manual de ~/bin/36-copias-auto.sh (el mismo que lanza cron) con todo encendido
+código de salida: 0
+2026-11-21 14:02:55 === Inicio de las copias automáticas
+2026-11-21 14:03:06 OK fw2-opnsense 2026-11-21_1402_fw2-config.xml 2026-11-21_1402_sha256.txt 
+2026-11-21 14:03:06 OK    firewall
+2026-11-21 14:03:07 OK srv-mon 2026-11-21_1403_srv-mon.tar.gz 440K
+2026-11-21 14:03:07 OK    srv-mon
+2026-11-21 14:03:09 OK    proxmox-pve1
+2026-11-21 14:03:10 OK    proxmox-pve2
+2026-11-21 14:03:11 OK    proxmox-pve3
+2026-11-21 14:03:11 OK    truenas-config
+2026-11-21 14:03:12 OK    limpieza-nas
+2026-11-21 14:03:12 === Fin (todo OK)
+
+################ ESCENARIO 2 · FW3-Debian-NFT (FW2 apagado)
+
+## Intento 1 (nada más arrancar FW3): ping al .1 FALLA; HTTPS y traceroute sí van. Ver incidencia 28 (caché ARP).
+### Client-Linux · firewall activo: fw3 · 2026-11-21 14:04:16
+--- ip -4 -br a / ip route
+lo               UNKNOWN        127.0.0.1/8 
+enp0s3           UP             192.168.21.60/24 
+default via 192.168.21.1 dev enp0s3 proto static metric 100 
+192.168.21.0/24 dev enp0s3 proto kernel scope link src 192.168.21.60 metric 100 
+--- ping -c 3 192.168.21.1
+3 packets transmitted, 0 received, 100% packet loss, time 2091ms
+
+--- wget https://deb.debian.org (código HTTP)
+  HTTP/1.1 200 OK
+--- traceroute -n -m 4 1.1.1.1 (el primer salto tiene que ser el .1)
+traceroute to 1.1.1.1 (1.1.1.1), 4 hops max, 60 byte packets
+ 1  192.168.21.1  0.206 ms  0.266 ms  0.235 ms
+ 2  10.0.2.2  0.284 ms  0.335 ms  0.375 ms
+ 3  * * *
+ 4  1.1.1.1  3.060 ms  3.055 ms  4.999 ms
+
+## Intento 2 (30 s después)
+### Client-Linux · firewall activo: fw3 · 2026-11-21 14:04:47
+--- ip -4 -br a / ip route
+lo               UNKNOWN        127.0.0.1/8 
+enp0s3           UP             192.168.21.60/24 
+default via 192.168.21.1 dev enp0s3 proto static metric 100 
+192.168.21.0/24 dev enp0s3 proto kernel scope link src 192.168.21.60 metric 100 
+--- ping -c 3 192.168.21.1
+3 packets transmitted, 3 received, 0% packet loss, time 2537ms
+rtt min/avg/max/mdev = 0.209/0.226/0.251/0.018 ms
+--- wget https://deb.debian.org (código HTTP)
+  HTTP/1.1 200 OK
+--- traceroute -n -m 4 1.1.1.1 (el primer salto tiene que ser el .1)
+traceroute to 1.1.1.1 (1.1.1.1), 4 hops max, 60 byte packets
+ 1  192.168.21.1  1.133 ms  1.088 ms  1.029 ms
+ 2  10.0.2.2  0.922 ms  0.890 ms  0.728 ms
+ 3  * * *
+ 4  1.1.1.1  2.927 ms  4.614 ms  4.533 ms
+
+################ ESCENARIO 3 · FW1-MikroTik (FW3 apagado)
+
+## Prueba de la hipótesis ARP (14:06, nada más arrancar FW1): 'ip neigh show 192.168.21.1' en Client-Linux muestra la MAC de FW3 [OCULTO]
+## en estado STALE -> ping -c 3 192.168.21.1: 3 enviados, 0 recibidos -> la entrada pasa a DELAY. Unos segundos después se renueva sola:
+### Client-Linux · firewall activo: fw1 · 2026-11-21 14:06:16
+--- ip -4 -br a / ip route
+lo               UNKNOWN        127.0.0.1/8 
+enp0s3           UP             192.168.21.60/24 
+default via 192.168.21.1 dev enp0s3 proto static metric 100 
+192.168.21.0/24 dev enp0s3 proto kernel scope link src 192.168.21.60 metric 100 
+--- ping -c 3 192.168.21.1
+3 packets transmitted, 3 received, 0% packet loss, time 3630ms
+rtt min/avg/max/mdev = 0.238/0.279/0.357/0.054 ms
+--- wget https://deb.debian.org (código HTTP)
+  HTTP/1.1 200 OK
+--- traceroute -n -m 4 1.1.1.1 (el primer salto tiene que ser el .1)
+traceroute to 1.1.1.1 (1.1.1.1), 4 hops max, 60 byte packets
+ 1  192.168.21.1  0.254 ms  0.232 ms  0.219 ms
+ 2  10.0.2.2  0.273 ms  0.281 ms  0.305 ms
+ 3  * * *
+ 4  1.1.1.1  4.964 ms  4.941 ms  4.914 ms
+--- FW1 visto desde srv-mon (/system identity, /system resource)
+  name: FW1-MikroTik
+  version: 7.25.1
+
+################ ESCENARIO 4 · FW1 + WinServer-2025 + Client-Win11 (Proxmox apagado)
+
+### CLIENT-WIN11 - 2026-11-21 14:16:23
+--- IPv4, puerta de enlace y DNS
+Ethernet  IP 192.168.21.50/24  GW 192.168.21.1  DNS 192.168.21.1,1.1.1.1
+--- ping a 192.168.21.1
+respuestas: 3 de 3
+--- HTTPS https://deb.debian.org
+HTTP 200
+--- tracert -d -h 2 1.1.1.1 (primer salto = .1)
+
+  1    <1 ms    <1 ms    <1 ms  192.168.21.1 
+  2    <1 ms    <1 ms    <1 ms  10.0.2.2 
+
+
+### WINSERVER-2025 - 2026-11-21 14:16:35
+--- IPv4, puerta de enlace y DNS
+Ethernet  IP 192.168.21.30/24  GW 192.168.21.1  DNS 192.168.21.1,1.1.1.1
+--- ping a 192.168.21.1
+respuestas: 3 de 3
+--- HTTPS https://deb.debian.org
+HTTP 200
+--- tracert -d -h 2 1.1.1.1 (primer salto = .1)
+
+  1    <1 ms    <1 ms    <1 ms  192.168.21.1 
+  2    <1 ms    <1 ms    <1 ms  10.0.2.2 
+
+
+
+################ RESUMEN
+| Comprobación                                        | Resultado |
+|-----------------------------------------------------|-----------|
+| FW2-OPNsense: ping .1, HTTPS 200, traceroute por .1 | OK        |
+| FW3-Debian-NFT: ping .1, HTTPS 200, traceroute      | OK (1.er ping FALLA por la caché ARP; 2.º intento OK) |
+| FW1-MikroTik: ping .1, HTTPS 200, traceroute        | OK        |
+| Proxmox: clúster thinklab Quorate (3/3 votos)       | OK        |
+| Proxmox: VM150 (pve2) y CT151 (pve3) arrancan       | OK (running y responden al ping) |
+| TrueNAS: pool copias ONLINE, sin errores            | OK        |
+| TrueNAS: copias en cada dataset                     | OK (8 datasets con copias) |
+| srv-mon: RAID 1 (md1) y RAID 5 (md5) limpios        | OK [UU] y [UUU] |
+| srv-mon: espejo iSCSI md2 (sdb local + sdi iSCSI)   | OK [UU], sesión LOGGED_IN |
+| srv-mon: crontab 02:30 + log de copias              | OK (ejecución de hoy: todo OK) |
+| WinServer-2025: red, ping .1, HTTPS, tracert        | OK        |
+| Client-Win11: red, ping .1, HTTPS, tracert          | OK        |

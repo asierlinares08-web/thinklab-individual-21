@@ -1,0 +1,15 @@
+# /etc/systemd/system/espejo-readd.service · P19
+# Al arrancar, md2 se monta antes de que llegue el disco iSCSI (va por la red) y se queda degradado [U_].
+# Este servicio espera a que open-iscsi conecte el disco de TrueNAS y lo vuelve a añadir al espejo.
+# Gracias al bitmap interno, solo se copia lo que cambió mientras faltaba (segundos).
+[Unit]
+Description=P19: volver a añadir el disco iSCSI de TrueNAS al espejo md2
+After=open-iscsi.service network-online.target
+Wants=open-iscsi.service network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'D=/dev/disk/by-path/ip-192.168.21.20:3260-iscsi-iqn.2005-10.org.freenas.ctl:espejo-lun-0; for i in $(seq 1 30); do [ -e $D ] && break; sleep 2; done; mdadm --detail /dev/md2 | grep -q "$(readlink -f $D)" || mdadm /dev/md2 --re-add $D || mdadm /dev/md2 --add $D'
+
+[Install]
+WantedBy=multi-user.target

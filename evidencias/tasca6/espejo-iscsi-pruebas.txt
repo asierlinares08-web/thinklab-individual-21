@@ -1,0 +1,190 @@
+# P19 · Pruebas del espejo md2 (sdb local + disco iSCSI de TrueNAS) · scripts/42-espejo-prueba.sh
+
+=================== Si TrueNAS deja de responder, iSCSI espera 120 s por defecto antes de dar error (y mientras, el espejo se queda colgado). (19:03:30)
+Para un disco de un RAID es mejor fallar rápido: 15 s (en la sesión actual y para las siguientes).
+/sys/class/iscsi_session/session1/recovery_tmo = 15
+
+=================== Estado del espejo (19:03:30)
+md2 : active raid1 sdi[1] sdb[0]
+      1046528 blocks super 1.2 [2/2] [UU]
+      bitmap: 1/1 pages [4KB], 65536KB chunk
+
+             State : clean 
+    Active Devices : 2
+    Failed Devices : 0
+       0       8       16        0      active sync   /dev/sdb
+       1       8      128        1      active sync   /dev/sdi
+Datos: todos los SHA-256 coinciden (7 ficheros)
+
+########## PRUEBA 1: cae el equipo REMOTO (TrueNAS deja de servir el disco)
+
+=================== TrueNAS: servicio iSCSI → STOP (19:03:30)
+iscsitarget: STOPPED
+
+=================== Escribir con el espejo como esté (así md detecta si falta un disco) (19:03:35)
+md2 : active raid1 sdi[1](F) sdb[0]
+      1046528 blocks super 1.2 [2/1] [U_]
+      bitmap: 1/1 pages [4KB], 65536KB chunk
+
+             State : clean, degraded 
+    Active Devices : 1
+    Failed Devices : 1
+       0       8       16        0      active sync   /dev/sdb
+       -       0        0        1      removed
+       1       8      128        -      faulty   /dev/sdi
+Datos: todos los SHA-256 coinciden (9 ficheros)
+
+=================== TrueNAS: servicio iSCSI → START (19:03:49)
+iscsitarget: RUNNING
+
+=================== Volver a conectar el disco iSCSI y añadirlo al espejo (19:03:50)
+Disco remoto: /dev/sdi
+mdadm: hot removed 8:128 from /dev/md2
+mdadm: re-added /dev/sdi
+md2 : active raid1 sdi[1] sdb[0]
+      1046528 blocks super 1.2 [2/1] [U_]
+      [====>................]  recovery = 22.5% (236544/1046528) finish=0.0min speed=171008K/sec
+      bitmap: 1/1 pages [4KB], 65536KB chunk
+Resincronización terminada en 2.0 s
+md2 : active raid1 sdi[1] sdb[0]
+      1046528 blocks super 1.2 [2/2] [UU]
+      bitmap: 1/1 pages [4KB], 65536KB chunk
+
+             State : clean 
+    Active Devices : 2
+    Failed Devices : 0
+       0       8       16        0      active sync   /dev/sdb
+       1       8      128        1      active sync   /dev/sdi
+Datos: todos los SHA-256 coinciden (9 ficheros)
+
+########## PRUEBA 2: cae el disco LOCAL de srv-mon
+
+=================== Fallo del disco LOCAL (/dev/sdb) (19:04:06)
+md2 : active raid1 sdi[1] sdb[0](F)
+      1046528 blocks super 1.2 [2/1] [_U]
+      bitmap: 1/1 pages [4KB], 65536KB chunk
+
+             State : clean, degraded 
+    Active Devices : 1
+    Failed Devices : 1
+       -       0        0        0      removed
+       1       8      128        1      active sync   /dev/sdi
+       0       8       16        -      faulty   /dev/sdb
+Datos: todos los SHA-256 coinciden (9 ficheros)
+
+=================== Escribir con el espejo como esté (así md detecta si falta un disco) (19:04:07)
+md2 : active raid1 sdi[1] sdb[0](F)
+      1046528 blocks super 1.2 [2/1] [_U]
+      bitmap: 1/1 pages [4KB], 65536KB chunk
+
+             State : clean, degraded 
+    Active Devices : 1
+    Failed Devices : 1
+       -       0        0        0      removed
+       1       8      128        1      active sync   /dev/sdi
+       0       8       16        -      faulty   /dev/sdb
+Datos: todos los SHA-256 coinciden (11 ficheros)
+
+=================== Cambiar el disco local: quitarlo y volverlo a añadir (19:04:10)
+mdadm: hot removed /dev/sdb from /dev/md2
+mdadm: re-added /dev/sdb
+md2 : active raid1 sdb[0] sdi[1]
+      1046528 blocks super 1.2 [2/2] [UU]
+      bitmap: 1/1 pages [4KB], 65536KB chunk
+
+Reconstrucción terminada en 1 s
+md2 : active raid1 sdb[0] sdi[1]
+      1046528 blocks super 1.2 [2/2] [UU]
+      bitmap: 1/1 pages [4KB], 65536KB chunk
+
+             State : clean 
+    Active Devices : 2
+    Failed Devices : 0
+       0       8       16        0      active sync   /dev/sdb
+       1       8      128        1      active sync   /dev/sdi
+Datos: todos los SHA-256 coinciden (11 ficheros)
+
+########## PRUEBA 3 (caso de uso): srv-mon pierde su disco: los datos se recuperan SOLO con el disco de TrueNAS
+
+=================== Caso de uso: srv-mon pierde su disco. ¿Se pueden recuperar los datos SOLO con el disco de TrueNAS? (19:04:11)
+mdadm: stopped /dev/md2
+Montar el espejo solo con el disco remoto /dev/sdi:
+mdadm: /dev/md2 has been started with 1 drive (out of 2).
+Montado en solo lectura
+md2 : active (auto-read-only) raid1 sdi[1]
+      1046528 blocks super 1.2 [2/1] [_U]
+      bitmap: 0/1 pages [0KB], 65536KB chunk
+
+             State : clean, degraded 
+    Active Devices : 1
+    Failed Devices : 0
+       -       0        0        0      removed
+       1       8      128        1      active sync   /dev/sdi
+Datos: todos los SHA-256 coinciden (11 ficheros)
+/mnt/espejo:
+datos.bin
+escrito-190335.txt
+escrito-190407.txt
+lost+found
+nuevo-190335.bin
+nuevo-190407.bin
+scripts-copias
+sumas.sha256
+
+/mnt/espejo/scripts-copias:
+30-copia-firewall.sh
+32-copia-srv-mon.sh
+36-copias-auto.sh
+40-raid-lab.sh
+41-espejo-iscsi.sh
+vigila.sh
+
+=================== Volver a la normalidad: espejo con los dos discos (19:04:12)
+mdadm: stopped /dev/md2
+mdadm: /dev/md2 has been started with 2 drives.
+md2 : active raid1 sdb[0] sdi[1]
+      1046528 blocks super 1.2 [2/2] [UU]
+      bitmap: 1/1 pages [4KB], 65536KB chunk
+
+             State : active 
+    Active Devices : 2
+    Failed Devices : 0
+       0       8       16        0      active sync   /dev/sdb
+       1       8      128        1      active sync   /dev/sdi
+Datos: todos los SHA-256 coinciden (11 ficheros)
+
+########## PRUEBA 4: reinicio de srv-mon (19:05:15)
+tcp: [1] 192.168.21.20:3260,1 iqn.2005-10.org.freenas.ctl:espejo (non-flash)
+15
+nov 19 19:05:02 srv-mon mdadm[409]: mdadm: NewArray event detected on md device /dev/md2
+nov 19 19:05:02 srv-mon mdadm[409]: mdadm: DegradedArray event detected on md device /dev/md2
+nov 19 19:05:03 srv-mon kernel: EXT4-fs (md2): mounted filesystem 0e2b335e-a7cd-462f-9253-c3f165115059 r/w with ordered data mode. Quota mode: none.
+nov 19 19:05:15 srv-mon sudo[834]:    asier : PWD=/home/asier ; USER=root ; COMMAND=/usr/bin/bash -c 'iscsiadm -m session; cat /sys/class/iscsi_session/session*/recovery_tmo; journalctl -b --no-pager -o short | grep -iE "md2|md/raid1" | tail -4'
+
+=================== Estado del espejo (19:05:16)
+md2 : active raid1 sdb[0]
+      1046528 blocks super 1.2 [2/1] [U_]
+      bitmap: 1/1 pages [4KB], 65536KB chunk
+
+             State : clean, degraded 
+    Active Devices : 1
+    Failed Devices : 0
+       0       8       16        0      active sync   /dev/sdb
+       -       0        0        1      removed
+Datos: todos los SHA-256 coinciden (11 ficheros)
+/dev/md2 /mnt/espejo
+
+########## PRUEBA 5: reinicio con el servicio espejo-readd (scripts/espejo-readd.service) (19:06:09)
+     Active: inactive (dead) since Thu 2026-11-19 19:05:51 CET; 19s ago
+
+=================== Estado del espejo (19:06:11)
+md2 : active raid1 sdi[1] sdb[0]
+      1046528 blocks super 1.2 [2/2] [UU]
+      bitmap: 0/1 pages [0KB], 65536KB chunk
+
+             State : clean 
+    Active Devices : 2
+    Failed Devices : 0
+       0       8       16        0      active sync   /dev/sdb
+       1       8      128        1      active sync   /dev/sdi
+Datos: todos los SHA-256 coinciden (11 ficheros)

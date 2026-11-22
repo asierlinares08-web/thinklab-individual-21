@@ -1,0 +1,24 @@
+# P16 · Incidencia de arranque provocada en Server-Monitorizacion (19/11/2026)
+Errada: en /etc/fstab, la línea del RAID 5 pasa a LABEL=raid6 (no existe) y sin nofail. Después, reboot.
+
+## Sonda desde el anfitrión: ¿responde el SSH de srv-mon? (cada 2 s, solo cambios)
+18:21:04 ssh=OK
+18:21:06 ssh=--
+18:24:31 ssh=OK
+18:24:44 ssh=--
+18:25:05 ssh=OK
+
+## Cronología
+18:21:04  reboot con el fstab mal (se provoca la incidencia)
+18:22:35  systemd se cansa de esperar el disco (90 s): «Timed out waiting for device …raid6» → modo de emergencia
+18:22:55  DETECCIÓN en la consola: «Cannot open access to console, the root account is locked» (no se puede entrar)
+18:23:13  Ctrl+Alt+Supr → menú de GRUB → «e» → al final de la línea linux: systemd.mask=mnt-raid5.mount → Ctrl+X
+18:24:31  SSH otra vez disponible (sistema en «degraded», / en solo lectura)
+18:24:44  mount -o remount,rw / → fstab corregido (LABEL=raid5 + nofail) → mount /mnt/raid5 → SHA-256 de prueba OK → reboot
+18:25:05  arranque normal: systemctl is-system-running = running; md1 y md5 montados
+
+## Tiempos
+Sin servicio (SSH caído):            18:21:06 → 18:24:31 = 3 min 25 s
+Hasta dejarlo como antes:            18:21:04 → 18:25:05 = 4 min 01 s
+De ellos, espera fija de systemd:    90 s (DefaultDeviceTimeoutSec)
+Respuesta desde la detección:        18:22:55 → 18:25:05 = 2 min 10 s

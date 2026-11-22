@@ -1,0 +1,14 @@
+# /etc/apt/sources.list · Debian 13 «trixie» por HTTPS (P10)
+# Por qué HTTPS: los tres firewalls del laboratorio BLOQUEAN HTTP (TCP 80) desde la LAN
+# (reglas de prueba P6/P7/P8). Con http:// apt no llega a la réplica; con https:// (TCP 443) sí.
+# Además, HTTPS cifra la descarga (aunque apt ya comprueba las firmas GPG de los paquetes).
+# Requisito: el paquete ca-certificates (viene en la instalación base).
+# Uso dentro de la VM:
+#   sudo wget -qO /etc/apt/sources.list https://raw.githubusercontent.com/asierlinares08-web/thinklab-individual-21/main/configs/debian/sources.list
+
+# Paquetes principales de la versión estable
+deb https://deb.debian.org/debian trixie main non-free-firmware
+# Actualizaciones que no esperan a la siguiente versión menor (13.x)
+deb https://deb.debian.org/debian trixie-updates main non-free-firmware
+# Parches de seguridad (los más importantes)
+deb https://security.debian.org/debian-security trixie-security main non-free-firmware

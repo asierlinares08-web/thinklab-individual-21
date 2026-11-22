@@ -1,0 +1,20 @@
+# P14a · FW3-Debian-NFT · copia, errada controlada y recuperación (19/11/2026, desde Server-Monitorizacion)
+## 1. Copia (scripts/30-copia-firewall.sh, SSH con clave → TrueNAS)
+2026-11-19 17:51:13 OK fw3-debian 2026-11-19_1751_fw3-config.tar.gz 2026-11-19_1751_fw3-paquetes.txt 2026-11-19_1751_sha256.txt 
+-rw-r--r-- 1 asier asier 1793 Nov 19 17:51 2026-11-19_1751_fw3-config.tar.gz
+-rw-r--r-- 1 asier asier 7731 Nov 19 17:51 2026-11-19_1751_fw3-paquetes.txt
+-rw-r--r-- 1 asier asier  199 Nov 19 17:51 2026-11-19_1751_sha256.txt
+2db45dc669fbebc818424a41bdc3c75f3e5ecb625ae0cb19f0964694004b8ccb  2026-11-19_1751_fw3-config.tar.gz
+906c76d30b598f7f30b05286ac9be7c875a4725fdc12d0fcd0d8d4fb91f18ba0  2026-11-19_1751_fw3-paquetes.txt
+etc/nftables.conf
+etc/network/interfaces
+etc/sysctl.d/
+etc/sysctl.d/README.sysctl
+etc/sysctl.d/99-forward.conf
+nftables.conf dentro de la copia: 3d6d24b903d19d2e1365d22ce4db0fcdea4624efb0d341e0f32f4d9fae82d61c  -
+
+## 2. Vigilancia cada segundo (scripts/31-vigila-parada.sh: ping al .1 + ping a 1.1.1.1 a través del NAT). Solo los cambios de estado:
+17:55:29 ping_fw=OK internet=OK
+17:55:52 ping_fw=OK internet=--
+17:56:31 ping_fw=OK internet=OK
+(17:55:51 errada: /etc/nftables.conf vacío + restart · 17:56:31 tar de la copia + nft -c + restart)

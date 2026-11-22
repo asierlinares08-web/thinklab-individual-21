@@ -1,0 +1,122 @@
+# Rendimiento del anfitrión · escenario M-maximo-con-winserver · 2026-11-19 18:49:17 · 150 s (muestras cada 5 s)
+Anfitrión: 12 hilos de CPU · 31 GiB de RAM · disco de las VMs: /dev/sda · red: wlp14s0
+VMs encendidas:
+  - FW2-OPNsense
+  - Proxmox-Node1
+  - Proxmox-Node2
+  - Proxmox-Node3
+  - NAS-TrueNAS
+  - WinServer-2025
+  - Server-Monitorizacion
+  - Client-Linux
+RAM asignada a las VMs encendidas: 28,0 GiB
+
+CPU: usuario 4 % · sistema 16 % · libre 77 % · espera de disco (wa) 3 %
+Procesos esperando CPU (r): media 2,8 · máximo 10 (hay 12 hilos)
+RAM libre (free): mínimo 0,3 GiB · swap usada: máx 0,18 GiB · swap in/out: 2 / 0 KB/s de media
+Disco /dev/sda: uso (%util) media 62 % · máx 91 % · lectura 117,9 MB/s · escritura 56,5 MB/s · espera media r/w 5,1 / 7,5 ms
+Red wlp14s0: recibe 5,0 kB/s · envía 2,0 kB/s (media)
+Latencia del anfitrión («bloqueo»): media 2 ms · máxima 2 ms de retraso sobre 100 ms
+
+--- vmstat (cada 5 s)
+--procs-- -----------------------memory---------------------- ---swap-- -----io---- -system-- ----------cpu----------
+   r    b         swpd         free         buff        cache   si   so    bi    bo   in   cs  us  sy  id  wa  st  gu
+   3    0       187392      5263644       108232      1803776   14   52 10276  9655 168480   19   2   5  92   0   0   0
+   3    1       187392       830532       108468      1807972    0    0 177482 29347 210757 37680   3  18  78   1   0   0
+   2    0       187392       845368       109012      1807992    0    0 156118 111282 226421 50715   4  18  76   2   0   0
+  10    1       187392       850600       109624      1808036    0    0 116877 63446 229200 45472   3  25  71   0   0   0
+   2    0       187392       855996       109932      1808040    0    0 170011 67676 222816 49375   4  20  73   3   0   0
+   1    0       187392       848196       110292      1807696    0    0 65144 62326 213412 40800   3  14  82   1   0   0
+   2    0       187392       843120       110540      1807712    0    0 172850 69831 221063 53451   4  18  77   1   0   0
+   0    0       187392       854668       110708      1807820    0    0 105972 57177 214996 40816   3  15  81   1   0   0
+   2    0       187392       857484       111020      1807836    0    0 47759  1626 201717 19274   1   6  93   0   0   0
+   1    0       187392       857496       111292      1807812    0    0 175338 87501 220828 56679   5  18  75   2   0   0
+   1    0       187392       854596       111588      1807816    0    0 57195 42293 213424 35162   3  13  83   1   0   0
+   1    0       187392       865284       111796      1807904    0    0 172916 67466 219490 47035   4  16  78   3   0   0
+   2    0       187392       863304       111948      1807944    0    0 103728 40422 205693 36070   3  13  83   1   0   0
+  10    0       187392       852060       112308      1807916    0    0 97044 41930 209605 39052   3  13  83   2   0   0
+   1    2       187392       825488       112560      1808068    0    0 159829 76581 219524 49812   4  18  77   1   0   0
+   3    1       187392       821880       113140      1808064    0    0 85575 40974 211106 33498   2  15  81   2   0   0
+   2    0       187392       844264       113348      1808140    0    0 170485 81629 222582 56022   5  18  75   2   0   0
+   0    1       187392       543492       185904      1845796    0    0 72428 79995 217768 44040   4  16  77   3   0   0
+   2    1       187392       442624       269296      1902824    0    0 140820 34758 214274 35889   4  11  79   6   0   0
+   1    0       187392       609056       272984      1905848    0    0 153614 92675 220818 51887   5  18  74   3   0   0
+   1    0       187392       622136       273108      1905892    0    0  3470 25492 196569 21359   2   7  91   0   0   0
+--procs-- -----------------------memory---------------------- ---swap-- -----io---- -system-- ----------cpu----------
+   r    b         swpd         free         buff        cache   si   so    bi    bo   in   cs  us  sy  id  wa  st  gu
+   1    0       187392       629884       273340      1905908    0    0   832   818 197008 14068   1   2  97   0   0   0
+  10    1       187392       652040       273532      1906036    0    0 138883 39332 212425 35756   3  12  82   2   0   0
+   3    0       187392       684272       273716      1906108    0    0 137415 72102 217897 51110   4  16  78   2   0   0
+   5    0       187392       688992       274032      1906248    0    0 77657 36717 212106 34256   2  13  85   0   0   0
+   3    2       187392       680196       274852      1908056   62    0 139191 99121 219173 49217   4  15  77   4   0   0
+   2    2       187392       489852       275552      2054744   12    0 97008 74903 230097 59831   4  17  65  15   0   0
+   2    2       187392       408768       275868      2134860    0    0 197197 67664 231102 62841   4  21  60  15   0   0
+   5    2       187392       421288       276292      2209752    6    0 133678 47127 222335 58057   8  28  56   9   0   0
+   3    3       187392       365152       277172      2267084    0    0 143459 51508 213925 46624   6  22  64   8   0   0
+   2    5       187392       330632       277696      2306572    0    0 151236 71882 215851 56053   8  30  53   8   0   0
+
+--- iostat -dxy /dev/sda
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            893.40 176779.30   492.00  35.51    4.57   197.87  107.20  29133.50    81.40  43.16    8.71   271.77    0.00      0.00     0.00   0.00    0.00     0.00   11.80    4.97    5.08  60.12
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           1175.00 156770.70   313.20  21.05    4.83   133.42  504.40 110619.60    98.60  16.35    3.49   219.31    0.00      0.00     0.00   0.00    0.00     0.00   26.40    6.14    7.60  85.64
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           2747.80 115801.00   252.80   8.42    0.93    42.14  326.40  63668.20    86.40  20.93    1.99   195.06    0.00      0.00     0.00   0.00    0.00     0.00   30.40    1.67    3.26  69.92
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            721.40 170158.40   420.80  36.84    8.52   235.87  223.60  68329.80   121.60  35.23   14.49   305.59    0.00      0.00     0.00   0.00    0.00     0.00   15.40   16.35    9.64  79.20
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            324.60  66123.60   117.00  26.49    5.57   203.71  281.60  62325.70    85.60  23.31    6.68   221.33    0.00      0.00     0.00   0.00    0.00     0.00   18.00    6.89    3.81  44.10
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            522.60 172850.30   597.00  53.32    7.83   330.75  246.00  69828.70   115.60  31.97    8.79   283.86    0.00      0.00     0.00   0.00    0.00     0.00   12.00    8.60    6.36  67.58
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            314.80 105971.60   202.20  39.11    8.64   336.63  172.00  57175.60   125.80  42.24   10.25   332.42    0.00      0.00     0.00   0.00    0.00     0.00    8.40    8.57    4.55  44.90
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            186.40  47080.60   145.80  43.89    3.90   252.58   93.00   1627.80    35.00  27.34    2.02    17.50    0.00      0.00     0.00   0.00    0.00     0.00   15.60    3.10    0.96  17.74
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            534.20 176016.80   448.60  45.65    9.21   329.50  261.40  87500.80   139.60  34.81   12.51   334.74    0.00      0.00     0.00   0.00    0.00     0.00   13.60   11.97    8.35  76.08
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            207.40  57195.20   119.40  36.54    8.70   275.77  145.20  42295.50    48.20  24.92    9.74   291.29    0.00      0.00     0.00   0.00    0.00     0.00   15.20    5.80    3.31  31.20
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            526.60 172916.10   464.60  46.87   10.34   328.36  229.80  65998.50   101.60  30.66   17.38   287.20    0.00      0.00     0.00   0.00    0.00     0.00   10.40   22.04    9.67  73.82
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            308.20 103728.00   160.60  34.26   12.71   336.56  130.40  41889.30    50.60  27.96   16.40   321.24    0.00      0.00     0.00   0.00    0.00     0.00    7.60   12.95    6.16  59.40
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            322.40  97044.40   330.60  50.63    6.86   301.01  166.40  41927.60    65.80  28.34   10.13   251.97    0.00      0.00     0.00   0.00    0.00     0.00   17.60    6.51    4.01  42.90
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            518.00 158830.60   394.00  43.20    8.63   306.62  279.60  75542.80   116.80  29.47   10.61   270.18    0.00      0.00     0.00   0.00    0.00     0.00   12.60    9.78    7.56  67.14
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            445.80  85537.00   201.80  31.16    4.62   191.87  198.20  42012.50    77.60  28.14    7.10   211.97    0.00      0.00     0.00   0.00    0.00     0.00   28.80    5.12    3.61  45.84
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            525.00 171521.30   437.60  45.46   10.30   326.71  256.40  80576.30   126.20  32.98   12.11   314.26    0.00      0.00     0.00   0.00    0.00     0.00   10.40   20.83    8.73  78.28
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           2170.40  72373.90  1888.80  46.53    0.81    33.35  333.00  81017.90    60.60  15.40    2.16   243.30    0.00      0.00     0.00   0.00    0.00     0.00   16.40    0.63    2.50  66.00
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           2490.60 140618.20  2601.80  51.09    1.33    56.46  176.80  33993.30    33.00  15.73    3.39   192.27    0.00      0.00     0.00   0.00    0.00     0.00    6.00    5.70    3.94  73.72
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            617.00 153870.30   408.40  39.83    6.40   249.38  309.20  93471.70    82.00  20.96    6.31   302.30    0.00      0.00     0.00   0.00    0.00     0.00    8.00   11.95    6.00  70.28
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda             15.40   3469.90     9.80  38.89    3.51   225.32   77.60  25491.50    47.80  38.12    6.01   328.50    0.00      0.00     0.00   0.00    0.00     0.00    6.00    0.57    0.52   7.50
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda             24.60    825.40     0.00   0.00    1.54    33.55   46.20    818.50    28.20  37.90    2.06    17.72    0.00      0.00     0.00   0.00    0.00     0.00   11.60    3.97    0.18   8.18
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            423.20 137609.20   342.60  44.74   10.92   325.16  152.40  39328.40    64.40  29.70   11.56   258.06    0.00      0.00     0.00   0.00    0.00     0.00    9.20   26.02    6.62  72.04
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            414.20 138695.20   284.40  40.71   11.16   334.85  248.60  72103.40    88.00  26.14   12.20   290.04    0.00      0.00     0.00   0.00    0.00     0.00    9.20   25.39    7.89  68.44
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            289.40  76466.60   299.40  50.85    4.07   264.22  162.40  36200.20    44.20  21.39    3.82   222.91    0.00      0.00     0.00   0.00    0.00     0.00   15.60    2.50    1.84  32.22
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda            584.40 138705.90   475.20  44.85    8.63   237.35  444.20  99282.70   164.60  27.04    4.25   223.51    0.00      0.00     0.00   0.00    0.00     0.00   34.40    9.30    7.25  84.86
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           7250.40  98470.20   168.60   2.27    0.51    13.58  305.20  75258.20   142.80  31.87    3.97   246.59    0.00      0.00     0.00   0.00    0.00     0.00   33.00    2.72    4.98  91.80
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           4768.80 197081.90   559.00  10.49    1.36    41.33  246.20  67665.20   107.40  30.37    9.52   274.84    0.00      0.00     0.00   0.00    0.00     0.00   15.60    4.21    8.89  90.04
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           4246.60 133923.60   255.60   5.68    0.94    31.54  189.60  45416.80   112.60  37.26    6.64   239.54    0.00      0.00     0.00   0.00    0.00     0.00   21.20    1.60    5.30  90.60
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           3535.73 142152.00   372.85   9.54    1.19    40.20  303.79  53111.78   127.15  29.50    5.25   174.83    0.00      0.00     0.00   0.00    0.00     0.00   43.51    2.00    5.88  90.32
+Device            r/s     rkB/s   rrqm/s  %rrqm r_await rareq-sz     w/s     wkB/s   wrqm/s  %wrqm w_await wareq-sz     d/s     dkB/s   drqm/s  %drqm d_await dareq-sz     f/s f_await  aqu-sz  %util
+sda           2505.41 151922.34   366.53  12.76    2.07    60.64  267.54  72025.45   196.59  42.36    8.13   269.22    0.00      0.00     0.00   0.00    0.00     0.00   26.25    5.69    7.52  88.88
+
+--- Carga: WinServer-2025 arrancando (18:46:40) + vzdump de la VM 150 (8 GiB): 12 copias completas en 152 s
+--- RAM «disponible» del anfitrión cada 15 s (free -m): de 2222 a 2349 MB, swap fija en 183 MB (ya estaba de antes).
+--- WinServer-2025 llegó a la pantalla de inicio con IP: Value: 192.168.21.30

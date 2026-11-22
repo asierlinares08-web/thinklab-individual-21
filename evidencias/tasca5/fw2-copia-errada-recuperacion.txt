@@ -1,0 +1,17 @@
+# P14a · FW2-OPNsense · copia, errada controlada y recuperación (19/11/2026, desde Server-Monitorizacion)
+## 1. Copia (scripts/30-copia-firewall.sh, API de OPNsense → TrueNAS)
+2026-11-19 17:45:41 OK fw2-opnsense 2026-11-19_1745_fw2-config.xml 2026-11-19_1745_sha256.txt 
+-rw-r--r-- 1 asier asier 40943 Nov 19 17:45 2026-11-19_1745_fw2-config.xml
+-rw-r--r-- 1 asier asier    97 Nov 19 17:45 2026-11-19_1745_sha256.txt
+75aeadf185c1b525834b8fde5c295e12cea9311010429d0708d7766d37dfe7c3  2026-11-19_1745_fw2-config.xml
+
+## 2. Vigilancia cada segundo (ping al .1 + HTTPS a deb.debian.org). Solo los cambios de estado:
+17:46:04 ping_fw=OK https=200
+17:46:42 ping_fw=OK https=000
+17:46:52 ping_fw=-- https=000
+17:49:28 ping_fw=OK https=000
+17:49:29 ping_fw=OK https=200
+(17:46:39 reboot con la IP de LAN cambiada a .254 · 17:48:39 empieza la recuperación · 17:48:51 reboot con la copia)
+
+## 3. Configuración después de recuperar vs copia de TrueNAS
+diff (líneas distintas): 0

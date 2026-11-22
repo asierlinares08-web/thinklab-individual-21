@@ -1,0 +1,182 @@
+INVENTARIO DE HARDWARE — equipo: clase (asier) — 2026-11-17 11:11:44
+Condiciones: uptime up 3 hours, 0 minutes · carga 0.64 0.52 0.38
+
+################ 1. Equipo y placa base ################
+  Manufacturer: ASUSTeK COMPUTER INC.
+  Product Name: ASUS EXPERTBOOK B3605CCA
+  Version: 1.0
+  Serial Number: [OCULTO]
+  Manufacturer: ASUSTeK COMPUTER INC.
+  Product Name: B3605CCA
+  Version: 1.0
+  Chasis: Notebook
+
+################ 2. Firmware y arranque ################
+  Modo de arranque: UEFI
+  Secure Boot: SecureBoot disabled
+  Vendor: ASUSTeK COMPUTER INC. (Licensed by AMI, LLC.)
+  Version: B3605CCA.303
+  Release Date: 06/11/2025
+  Tiempo de arranque:
+    Startup finished in 18.717s (firmware) + 5.825s (loader) + 4.213s (kernel) + 15.445s (userspace) = 44.202s 
+    graphical.target reached after 14.973s in userspace.
+  Servicios que más tardan:
+    8.799s plocate-updatedb.service
+    7.876s NetworkManager-wait-online.service
+    2.355s systemd-udev-settle.service
+    1.506s docker.service
+    1.306s logrotate.service
+
+################ 3. CPU ################
+  Architecture:                            x86_64
+  CPU(s):                                  18
+  Model name:                              Intel(R) Core(TM) Ultra 5 125H
+  BIOS Model name:                         Intel(R) Core(TM) Ultra 5 125H To Be Filled By O.E.M. CPU @ 2.8GHz
+  Thread(s) per core:                      2
+  Core(s) per socket:                      14
+  Socket(s):                               1
+  CPU(s) scaling MHz:                      33%
+  CPU max MHz:                             4500.0000
+  Virtualization:                          VT-x
+  L2 cache:                                14 MiB (7 instances)
+  L3 cache:                                18 MiB (1 instance)
+
+################ 4. Memoria RAM ################
+                 total        used        free      shared  buff/cache   available
+  Mem:            30Gi       9.8Gi       1.5Gi       1.7Gi        21Gi        20Gi
+  Swap:           15Gi       512Ki        15Gi
+  Capacidad máxima y ranuras:
+    Maximum Capacity: 64 GB
+    Number Of Devices: 2
+  Módulos (ranura · tamaño · tipo · velocidad):
+     Controller0-ChannelA-DIMM0 · 16 GB · DDR5 · 5600 MT/s
+     Controller1-ChannelA-DIMM0 · 16 GB · DDR5 · 5600 MT/s
+
+################ 5. Discos ################
+  NAME          SIZE TYPE ROTA TRAN   MODEL                      FSTYPE MOUNTPOINT
+  sda         931.5G disk    0 usb    EXCERIA PLUS                      
+  |-sda1        509M part    0                                   vfat   /boot/efi
+  |-sda2       58.6G part    0                                   ext4   /
+  `-sda3      872.4G part    0                                   ext4   /home
+  zram0         7.6G disk    0                                          [SWAP]
+  nvme0n1     953.9G disk    0 nvme   SAMSUNG MZVMA1T0HCLD-00BTW        
+  |-nvme0n1p1   260M part    0 nvme                              vfat   
+  |-nvme0n1p2    16M part    0 nvme                                     
+  |-nvme0n1p3 468.8G part    0 nvme                              ntfs   
+  |-nvme0n1p4   1.4G part    0 nvme                              ntfs   
+  |-nvme0n1p5   260M part    0 nvme                              vfat   
+  |-nvme0n1p6  12.1G part    0 nvme                              ext4   
+  `-nvme0n1p7 471.1G part    0 nvme                              ext4   
+  (ROTA=1 mecánico · ROTA=0 SSD/NVMe)
+  Velocidad negociada de los discos USB (lsusb -t: 480M=USB 2.0 · 5000M=USB 3.2 Gen1 · 10000M=Gen2 · 20000M=Gen2x2):
+    /:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+    /:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 20000M/x2
+    /:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    /:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/2p, 20000M/x2
+        |__ Port 002: Dev 002, If 0, Class=Mass Storage, Driver=uas, 5000M
+  --- /dev/sda ---
+  --- /dev/nvme0n1 ---
+    Model Number:                       SAMSUNG MZVMA1T0HCLD-00BTW
+    NVMe Version:                       1.4
+    Namespace 1 Size/Capacity:          1,024,209,543,168 [1.02 TB]
+    SMART overall-health self-assessment test result: PASSED
+
+################ 6. Red ################
+  lo               UNKNOWN        127.0.0.1/8 ::1/128 
+  eno1             UP             172.16.222.51/24 [IPv6 OCULTA] 
+  wlp1s0           DOWN           
+  docker0          DOWN           172.17.0.1/16 
+  Ruta por defecto: default via 172.16.222.1 dev eno1 proto dhcp src 172.16.222.51 metric 100 
+  0000:00:1f.6 Ethernet controller: Intel Corporation Device 550b (rev 20)
+  0000:01:00.0 Network controller: Realtek Semiconductor Co., Ltd. RTL8852BE PCIe 802.11ax Wireless Network Controller
+  Velocidad de enlace eno1: 1000Mb/s
+
+################ 7. Gráfica, USB y periféricos ################
+  0000:00:02.0 VGA compatible controller: Intel Corporation Meteor Lake-P [Intel Arc Graphics] (rev 08)
+  Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+  Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+  Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+  Bus 003 Device 002: ID 322e:2339 BillionPixels USB2.0 FHD UVC WebCam
+  Bus 003 Device 003: ID 0bda:0129 Realtek Semiconductor Corp. RTS5129 Card Reader Controller
+  Bus 003 Device 004: ID 413c:301a Dell Computer Corp. Dell MS116 Optical Mouse
+  Bus 003 Device 005: ID 13d3:3571 IMC Networks Bluetooth Radio
+  Bus 003 Device 006: ID 0ecb:20f6 KTMICRO JBL TUNE 310C USB-C
+  Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+  Bus 004 Device 002: ID 30de:1000 KIOXIA EXCERIA PLUS
+
+################ 8. Alimentación ################
+  ADP1: tipo Mains
+  BAT0: tipo Battery, carga 100%
+  (La potencia de la fuente de un sobremesa no se lee por software: mirar la etiqueta → anotar o N/C)
+
+################ 9. Temperaturas ################
+
+################ 10. Resumen inxi (si está) ################
+  System:
+    Kernel: 6.8.0-147-generic arch: x86_64 bits: 64 compiler: gcc v: 13.3.0
+    Desktop: Cinnamon v: 6.6.9 Distro: Linux Mint 22.3 Zena base: Ubuntu 24.04 noble
+  Machine:
+    Type: Laptop System: ASUSTeK product: ASUS EXPERTBOOK B3605CCA v: 1.0 serial: [OCULTO]
+    Mobo: ASUSTeK model: B3605CCA v: 1.0 serial: [OCULTO] UEFI: ASUSTeK (Licensed by AMI LLC.)
+      v: B3605CCA.303 date: 06/11/2025
+  Battery:
+    ID-1: BAT0 charge: 47.0 Wh (100.0%) condition: 47.0/50.1 Wh (93.9%) volts: 11.9 min: 11.9
+      model: ASUSTeK ASUS Battery status: full
+  CPU:
+    Info: 14-core (4-mt/10-st) model: Intel Core Ultra 5 125H bits: 64 type: MST AMCP
+      arch: Meteor Lake rev: 4 cache: L1: 1.4 MiB L2: 14 MiB L3: 18 MiB
+    Speed (MHz): avg: 814 high: 1986 min/max: 400/4500:3600:2500 cores: 1: 400 2: 1986 3: 400
+      4: 1651 5: 400 6: 1749 7: 400 8: 400 9: 1028 10: 400 11: 400 12: 400 13: 400 14: 400 15: 1816
+      16: 1628 17: 400 18: 400 bogomips: 107827
+    Flags: avx avx2 ht lm nx pae sse sse2 sse3 sse4_1 sse4_2 ssse3 vmx
+  Graphics:
+    Device-1: Intel Meteor Lake-P [Intel Arc Graphics] vendor: ASUSTeK driver: i915 v: kernel
+      arch: Gen-13 bus-ID: 0000:00:02.0
+    Device-2: BillionPixels USB2.0 FHD UVC WebCam driver: uvcvideo type: USB bus-ID: 3-4:2
+    Display: server: X.Org v: 21.1.11 with: Xwayland v: 23.2.6 driver: X: loaded: modesetting
+      unloaded: fbdev,vesa dri: iris gpu: i915 resolution: 1: 1920x1080~60Hz 2: 1920x1200~60Hz
+    API: EGL v: 1.5 drivers: iris,swrast platforms: active: gbm,x11,surfaceless,device
+      inactive: wayland
+    API: OpenGL v: 4.6 compat-v: 4.5 vendor: intel mesa v: 25.2.8-0ubuntu0.24.04.4 glx-v: 1.4
+      direct-render: yes renderer: Mesa Intel Arc Graphics (MTL)
+    API: Vulkan v: 1.3.275 drivers: N/A surfaces: xcb,xlib devices: 2
+  Audio:
+    Device-1: Intel Meteor Lake-P HD Audio vendor: ASUSTeK driver: sof-audio-pci-intel-mtl
+      bus-ID: 0000:00:1f.3
+    Device-2: KTMICRO JBL TUNE 310C USB-C driver: hid-generic,snd-usb-audio,usbhid type: USB
+      bus-ID: 3-3:6
+    API: ALSA v: k6.8.0-147-generic status: kernel-api
+    Server-1: PipeWire v: 1.0.5 status: n/a (root, process)
+  Network:
+    Device-1: Intel driver: e1000e v: kernel port: N/A bus-ID: 0000:00:1f.6
+    IF: eno1 state: up speed: 1000 Mbps duplex: full mac: <filter>
+    Device-2: Realtek RTL8852BE PCIe 802.11ax Wireless Network vendor: AzureWave
+      driver: rtw89_8852be v: kernel port: 3000 bus-ID: 0000:01:00.0
+    IF: wlp1s0 state: down mac: <filter>
+    IF-ID-1: docker0 state: down mac: <filter>
+  Bluetooth:
+    Device-1: IMC Networks Bluetooth Radio driver: btusb v: 0.8 type: USB bus-ID: 3-10:5
+    Report: hciconfig ID: hci0 rfk-id: 0 state: up address: <filter> bt-v: 5.3 lmp-v: 12
+  RAID:
+    Hardware-1: Intel Volume Management Device NVMe RAID Controller Intel driver: vmd v: 0.6
+      bus-ID: 0000:00:0e.0
+  Drives:
+    Local Storage: total: 1.84 TiB used: 163.61 GiB (8.7%)
+    ID-1: /dev/nvme0n1 vendor: Samsung model: MZVMA1T0HCLD-00BTW size: 953.87 GiB temp: 32.9 C
+    ID-2: /dev/sda vendor: KIOXIA model: EXCERIA PLUS size: 931.51 GiB type: USB
+  Partition:
+    ID-1: / size: 57.36 GiB used: 37.32 GiB (65.1%) fs: ext4 dev: /dev/sda2
+    ID-2: /boot/efi size: 508 MiB used: 16.1 MiB (3.2%) fs: vfat dev: /dev/sda1
+    ID-3: /home size: 857.67 GiB used: 126.28 GiB (14.7%) fs: ext4 dev: /dev/sda3
+  Swap:
+    ID-1: swap-1 type: file size: 8 GiB used: 0 KiB (0.0%) file: /swapfile
+    ID-2: swap-2 type: zram size: 7.65 GiB used: 512 KiB (0.0%) dev: /dev/zram0
+  Sensors:
+    System Temperatures: cpu: 52.0 C mobo: N/A
+    Fan Speeds (rpm): N/A
+  Info:
+    Memory: total: 32 GiB note: est. available: 30.6 GiB used: 10 GiB (32.7%)
+    Processes: 421 Uptime: 3h 0m Init: systemd target: graphical (5)
+    Packages: 2429 Compilers: gcc: 13.3.0 Client: shell wrapper v: 5.2.21-release inxi: 3.3.34
+
+FIN DEL INVENTARIO

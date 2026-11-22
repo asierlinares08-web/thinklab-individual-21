@@ -1,0 +1,26 @@
+# --- Nunca subir a GitHub ---
+CREDENCIALES-PRIVADAS.md
+*.env
+.ssh/
+# Imágenes de instalación y discos virtuales (pesan GB)
+isos/
+*.iso
+*.img
+*.vdi
+*.vmdk
+*.qcow2
+*.zip
+*.bz2
+*.xz
+# Material del profesor (solo para consulta local)
+referencia/
+# Copias de configuración con posibles secretos (se guardan en TrueNAS, no aquí)
+copias-locales/
+*.backup
+*.rsc.secret
+# Varios
+*.swp
+.DS_Store
+# Ficheros de trabajo solo locales (no forman parte de la entrega)
+HOJA-DE-RUTA.md
+docs/12-defensa.md

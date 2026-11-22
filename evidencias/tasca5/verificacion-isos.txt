@@ -1,0 +1,35 @@
+2026-11-17 09:16:10 · debian-13.1.0-amd64-netinst.iso
+  Calculado: 658b28e209b578fe788ec5867deebae57b6aac5fce3692bbb116bab9c65568b3
+  Oficial:   658b28e209b578fe788ec5867deebae57b6aac5fce3692bbb116bab9c65568b3
+  Fuente:    https://cdimage.debian.org/cdimage/archive/13.1.0/amd64/iso-cd/SHA256SUMS
+  Resultado: CORRECTO
+2026-11-17 09:16:12 · OPNsense-26.7-dvd-amd64.iso.bz2
+  Calculado: 95cafedda6d5b22ce832e249dc2309110fbee19f813ad78cf28bb3d387186bfb
+  Oficial:   95cafedda6d5b22ce832e249dc2309110fbee19f813ad78cf28bb3d387186bfb
+  Fuente:    https://pkg.opnsense.org/releases/26.7/OPNsense-26.7-checksums-amd64.sha256
+  Resultado: CORRECTO
+2026-11-17 09:16:17 · proxmox-ve_9.2-1.iso
+  Calculado: 4e88fe416df9b527624a175f24c9aa07c714d3332afb1ee3dbf3879573ef2c6c
+  Oficial:   4e88fe416df9b527624a175f24c9aa07c714d3332afb1ee3dbf3879573ef2c6c
+  Fuente:    https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso
+  Resultado: CORRECTO
+2026-11-17 09:16:24 · TrueNAS-SCALE-25.10.7.iso
+  Calculado: 54ce9441ce66966a392e28f63604ca3c2c083d0bec4db7bb5af2f74f7a007c8e
+  Oficial:   54ce9441ce66966a392e28f63604ca3c2c083d0bec4db7bb5af2f74f7a007c8e
+  Fuente:    https://download.truenas.com/TrueNAS-SCALE-Goldeye/25.10.7/TrueNAS-SCALE-25.10.7.iso.sha256
+  Resultado: CORRECTO
+2026-11-17 09:51:55 · chr-7.25.1.vdi.zip
+  Calculado: 27709f919c484b6c18512f12f298e42ac274c6ef08164938abeab55246a0a0c1
+  Oficial:   27709f919c484b6c18512f12f298e42ac274c6ef08164938abeab55246a0a0c1
+  Fuente:    https://download.mikrotik.com/routeros/7.25.1/chr-7.25.1.vdi.zip.sha256
+  Resultado: CORRECTO
+2026-11-17 10:02:00 · win11.iso (Windows 11 25H2, build 26200.6584, Español x64)
+  Calculado: 5f53774dcadf7f0aea1c6424a937fcfffe79b4d00aea83e17a5c5accd48cd6de
+  Oficial:   N/C — Microsoft solo publica el hash de la versión actual (26H2) en https://www.microsoft.com/es-es/software-download/windows11
+  Fuente:    origen: web oficial de Microsoft (según Asier) · fichero creado en disco el 2026-10-26 09:15
+  Resultado: N/C (se guarda el SHA256 calculado para compararlo si Microsoft publica el de la 25H2)
+2026-11-17 10:02:00 · w2k25.iso (Windows Server 2025 Evaluation, build 26100.1742, es-ES x64)
+  Calculado: b73c9688a4b8d165cadc8bf9a52d86d6483b397801b791ffd5e7d1be6cbd5d56
+  Oficial:   N/C — el Evaluation Center de Microsoft no publica hash
+  Fuente:    https://www.microsoft.com/es-es/evalcenter/download-windows-server-2025 · fichero creado en disco el 2026-10-26
+  Resultado: N/C (se guarda el SHA256 calculado como referencia)

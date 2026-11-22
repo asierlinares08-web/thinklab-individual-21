@@ -1,0 +1,46 @@
+%% Esquema de red individual · Asier · puesto 21 · «Naix un sistema» V2.0
+%% Fuente Mermaid. PNG generado: diagramas/red-lan21.png (scripts/diagrama-png.sh)
+flowchart TB
+    INET(("Internet"))
+    AULA["Red del aula / de casa"]
+    INET --- AULA
+
+    subgraph HOST["Anfitrión Linux Mint + VirtualBox · NO está en LAN_21"]
+        NAT["NAT de VirtualBox (uno por firewall)<br/>10.0.2.0/24 · pasarela 10.0.2.2 · DHCP → 10.0.2.15"]
+
+        subgraph FW["Firewalls · LAN 192.168.21.1/24 · ⚠ solo UNO encendido"]
+            FW1["FW1-MikroTik<br/>ether1 WAN DHCP<br/>ether2 LAN .1"]
+            FW2["FW2-OPNsense<br/>em0 WAN DHCP<br/>em1 LAN .1"]
+            FW3["FW3-Debian-NFT<br/>enp0s3 WAN DHCP<br/>enp0s8 LAN .1"]
+        end
+
+        SW{{"Red interna LAN_21<br/>192.168.21.0/24 · sin DHCP<br/>GW .1 · DNS .1 + 1.1.1.1"}}
+
+        subgraph VIRT["Virtualización .10-.12"]
+            PVE1["Proxmox-Node1<br/>vmbr0 .10"]
+            PVE2["Proxmox-Node2<br/>vmbr0 .11"]
+            PVE3["Proxmox-Node3<br/>vmbr0 .12"]
+            MIG["VM .150 / contenedor .151<br/>(migración entre nodos)"]
+        end
+        NAS["NAS-TrueNAS<br/>.20 · almacenamiento"]
+        WS["WinServer-2025<br/>.30 · identidades"]
+        MON["Server-Monitorizacion<br/>.40 · supervisión + RAID"]
+        W11["Client-Win11<br/>.50 · cliente"]
+        CL["Client-Linux<br/>.60 · cliente + gestión web"]
+        NATG["NAT de gestión de srv-mon (adaptador 2)<br/>10.0.3.15/24 · SIN puerta de enlace<br/>127.0.0.1:2222 → 22"]
+    end
+    ADM(["Terminal del anfitrión<br/>ssh -p 2222 asier@127.0.0.1"])
+
+    AULA --- NAT
+    NAT ---|"adaptador 1 · NAT"| FW1
+    NAT ---|"adaptador 1 · NAT"| FW2
+    NAT ---|"adaptador 1 · NAT"| FW3
+    FW1 ---|"adaptador 2"| SW
+    FW2 ---|"adaptador 2"| SW
+    FW3 ---|"adaptador 2"| SW
+    SW --- PVE1 & PVE2 & PVE3
+    PVE1 -.- MIG
+    PVE2 -.- MIG
+    SW --- NAS & WS & MON & W11 & CL
+    ADM -.->|"gestión fuera de banda (solo SSH entrante)"| NATG
+    NATG -.-|"adaptador 2"| MON

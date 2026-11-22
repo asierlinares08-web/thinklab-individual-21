@@ -1,0 +1,50 @@
+# P14c · Copias automáticas con cron en Server-Monitorizacion (19/11/2026)
+
+## 1. crontab de asier (definitivo)
+$ crontab -l
+# Copias automáticas (P14c, a105): cada día a las 02:30 → TrueNAS. Log: ~/copias.log
+30 2 * * * /home/asier/bin/36-copias-auto.sh
+
+## 2. Prueba: se añadió una línea temporal para las 18:16 (ya quitada). Esto es lo que escribió cron en ~/copias.log:
+2026-11-19 18:16:01 === Inicio de las copias automáticas
+2026-11-19 18:16:12 OK fw2-opnsense 2026-11-19_1816_fw2-config.xml 2026-11-19_1816_sha256.txt 
+2026-11-19 18:16:12 OK    firewall
+2026-11-19 18:16:12 OK srv-mon 2026-11-19_1816_srv-mon.tar.gz 424K
+2026-11-19 18:16:12 OK    srv-mon
+2026-11-19 18:16:18 --    proxmox-pve1 apagado: no se copia
+2026-11-19 18:16:23 --    proxmox-pve2 apagado: no se copia
+2026-11-19 18:16:28 --    proxmox-pve3 apagado: no se copia
+2026-11-19 18:16:28 OK    truenas-config
+2026-11-19 18:16:28 OK    limpieza-nas
+2026-11-19 18:16:28 === Fin (todo OK)
+
+## 3. Lo que dejó en TrueNAS (desde srv-mon)
+/mnt/copias/fw2-opnsense:
+-rw-r--r-- 1 asier asier 40943 Nov 19 18:16 2026-11-19_1816_fw2-config.xml
+-rw-r--r-- 1 asier asier    97 Nov 19 18:16 2026-11-19_1816_sha256.txt
+/mnt/copias/srv-mon:
+-rw-r--r-- 1 asier asier     97 Nov 19 18:16 2026-11-19_1816_sha256.txt
+-rw-r--r-- 1 asier asier 433100 Nov 19 18:16 2026-11-19_1816_srv-mon.tar.gz
+
+## 4. Configuración de TrueNAS, fuera del NAS (srv-mon)
+total 1632
+-rw------- 1 asier asier 835584 nov 19 18:13 2026-11-19_1813_truenas-config.db
+-rw-rw-r-- 1 asier asier 835584 nov 19 18:16 2026-11-19_1816_truenas-config.db
+
+## 5. Copia de las VMs de Proxmox: tarea propia de Proxmox (se creó en el P14b)
+  enabled: 1
+  id: copias-semanal
+  mode: snapshot
+  schedule: sun 02:00
+  storage: copias-nas
+  vmid: 150,151
+vzdump: copias-semanal
+	comment P14c copia semanal a TrueNAS
+	schedule sun 02:00
+	compress zstd
+	enabled 1
+	mode snapshot
+	storage copias-nas
+	vmid 150,151
+
+(19/11 18:20: se añadió umask 077 al script y se corrigieron los permisos a 600)

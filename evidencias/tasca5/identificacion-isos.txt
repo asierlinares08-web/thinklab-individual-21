@@ -1,0 +1,39 @@
+Identificación de las imágenes de instalación — 2026-11-17 09:19:09
+Carpeta: ~/Descargas (no se mueven ni se copian). Método: etiqueta del volumen (blkid), contenido (isoinfo/7z) y XML de install.wim en Windows.
+
+== debian-13.1.0-amd64-netinst.iso (784M)
+   ISO 9660 CD-ROM filesystem data (DOS/MBR boot sector) 'Debian 13.1.0 amd64 n' (bootable)
+== OPNsense-26.7-dvd-amd64.iso (2,0G)
+   ISO 9660 CD-ROM filesystem data 'OPNSENSE_INSTALL' (bootable)
+== proxmox-ve_9.2-1.iso (1,6G)
+   ISO 9660 CD-ROM filesystem data (DOS/MBR boot sector) 'PVE' (bootable)
+== TrueNAS-SCALE-25.10.7.iso (2,2G)
+   ISO 9660 CD-ROM filesystem data (DOS/MBR boot sector) 'ISOIMAGE' (bootable)
+== mikrotik-7.24.5.iso (69M)
+   ISO 9660 CD-ROM filesystem data 'MikroTik' (bootable)
+== mikrotik-7.25.iso (69M)
+   ISO 9660 CD-ROM filesystem data 'MikroTik' (bootable)
+== win11.iso (7,3G)
+   ISO 9660 CD-ROM filesystem data 'CCCOMA_X64FRE_ES-ES_DV9' (bootable)
+== w11.iso (6,4G)
+   ISO 9660 CD-ROM filesystem data 'CCCOMA_X64FRE_ES-ES_DV9' (bootable)
+== w2k25.iso (5,7G)
+   ISO 9660 CD-ROM filesystem data 'SSS_X64FREE_ES-ES_DV9' (bootable)
+
+== Proxmox: fichero .cd-info dentro de la ISO
+   RELEASE='9.2'
+   ISORELEASE='1'
+   ISONAME='proxmox-ve'
+   PRODUCT='pve'
+   PRODUCTLONG='Proxmox VE'
+== MikroTik: paquetes dentro de las ISO (son instaladores x86 de RouterOS, NO la imagen CHR .vdi)
+   mikrotik-7.24.5.iso: /routeros-7.24.5.npk
+   mikrotik-7.25.iso: /routeros-7.25.npk
+== Windows (sources/idwbinfo.txt y XML de sources/install.wim)
+   win11.iso : rama ge_release · BUILD 26200 · SPBUILD 6584 → Windows 11 25H2 (26200.6584) · ediciones Home/Pro/Education… · es-ES x64
+   w11.iso   : rama ni_release · setup.exe 10.0.22621.2506 → Windows 11 22H2/23H2 (familia 22621) · es-ES x64
+   w2k25.iso : rama ge_release · BUILD 26100 · SPBUILD 1742 → Windows Server 2025 Evaluation (Standard/Datacenter, Core y Escritorio) · es-ES x64
+
+== OPNsense: la ISO descomprimida coincide con el .bz2 verificado
+   sha256(bzcat OPNsense-26.7-dvd-amd64.iso.bz2) = 1efd5dc9fa12a1f93571183fe5e3823e22e332872de8417fafb5e4e4d48d5dcd
+   sha256(OPNsense-26.7-dvd-amd64.iso)           = 1efd5dc9fa12a1f93571183fe5e3823e22e332872de8417fafb5e4e4d48d5dcd  → IGUALES
